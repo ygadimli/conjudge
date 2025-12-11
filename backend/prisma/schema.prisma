@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  
+  // Profile Info
+  name      String?
+  country   String?
+  city      String?
+  bio       String?
+  
+  // Auth & Verification
+  isVerified           Boolean   @default(false)
+  verificationToken    String?
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  
+  // Ratings & Stats
+  rating        Int      @default(0)    // Contest Rating
+  battleRating  Int      @default(0) // Battle Rating
+  maxRating     Int      @default(0)
+  
+  brainType String?
+  role      String   @default("USER")
+  
+  // Ban System
+  isBanned   Boolean   @default(false)
+  bannedAt   DateTime?
+  banReason  String?
+  
+  // Profile Picture
+  profilePicture String?
+  
+  lastVisit DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  submissions     Submission[]
+  battle          BattleParticipant[]
+  createdProblems Problem[] @relation("UserProblems")
+  contests        Contest[]
+  
+  // Friends System (Self-relation)
+  followedBy    User[]   @relation("UserFollows")
+  following     User[]   @relation("UserFollows")
+}
+
+model Problem {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  difficulty  Int      // Keeps 1-3 for simple sorting, but rating is main
+  rating      Int      @default(800) // Codeforces style: 800, 1000, 1200...
+  category    String
+  tags        String   // Comma separated
+  testCases   String   // JSON: Supports Subtasks structure now
+  timeLimit   Int      @default(1000) // ms
+  memoryLimit Int      @default(256)  // MB
+  isAiGenerated Boolean @default(false)
+  externalSource String? // "Codeforces", "AtCoder", or null (Local)
+  externalId     String? // e.g., "1234/A"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  submissions Submission[]
+  rounds      BattleRound[]
+  createdBy   User? @relation("UserProblems", fields: [createdById], references: [id])
+  createdById String?
+  
+  contests    Contest[] @relation("ContestProblems")
+}
+
+model Contest {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  startTime   DateTime
+  duration    Int      // in minutes
+  status      String   @default("UPCOMING") // UPCOMING, RUNNING, FINISHED
+  
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
+
+  problems    Problem[] @relation("ContestProblems")
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Submission {
+  id        String   @id @default(uuid())
+  code      String
+  language  String
+  status    String   // AC, WA, TLE, RE, CE
+  score     Int      @default(0) // Points (0-100)
+  runtime   Int      // ms
+  memory    Int      // KB
+  createdAt DateTime @default(now())
+  
+  // Relations
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  problem   Problem  @relation(fields: [problemId], references: [id])
+  problemId String
+  
+  analysis  SubmissionAnalysis?
+}
+
+model SubmissionAnalysis {
+  id           String     @id @default(uuid())
+  submission   Submission @relation(fields: [submissionId], references: [id])
+  submissionId String     @unique
+  
+  complexity   String?
+  style        String?    // Stored as stringified JSON
+  suggestions  String     // Stored as comma-separated string
+  brainTypeData String?   // Stored as stringified JSON
+  createdAt    DateTime   @default(now())
+}
+
+model Battle {
+  id           String   @id @default(uuid())
+  type         String   // "1v1", "team", "blitz", "mirror"
+  status       String   // "waiting", "active", "finished"
+  startTime    DateTime?
+  endTime      DateTime?
+  createdAt    DateTime @default(now())
+  
+  // Relations
+  participants BattleParticipant[]
+  rounds       BattleRound[]
+}
+
+model BattleParticipant {
+  id        String   @id @default(uuid())
+  info      String?  // Stored as stringified JSON if needed
+  score     Int      @default(0)
+  rank      Int?
+  
+  // Relations
+  battle    Battle   @relation(fields: [battleId], references: [id])
+  battleId  String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model BattleRound {
+  id        String   @id @default(uuid())
+  order     Int
+  duration  Int      // seconds
+  
+  // Relations
+  battle    Battle   @relation(fields: [battleId], references: [id])
+  battleId  String
+  problem   Problem  @relation(fields: [problemId], references: [id])
+  problemId String
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  type      String   @default("INFO") // INFO, WARNING, IMPORTANT
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

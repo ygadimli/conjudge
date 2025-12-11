@@ -1,0 +1,110 @@
+PROJECT NAME: ConJudge Platform
+VERSION: 1.0.0 (Alpha)
+DESCRIPTION:
+ConJudge is a next-generation competitive programming platform that integrates AI-driven analysis, real-time multiplayer battles, and a unique cognitive ranking system called "BrainType".
+
+=============================================
+TECHNOLOGY STACK
+=============================================
+
+FRONTEND:
+- Framework: Next.js 16 (React)
+- Language: TypeScript
+- Styling: Tailwind CSS (v4)
+- Localization: next-intl (Supports: AZ, EN, TR, RU, DE, FR, JA)
+- State Management: React Context (AuthContext)
+- Icons: Material Symbols
+- Build Tool: Turbopack
+
+BACKEND:
+- Runtime: Node.js
+- Framework: Express.js
+- Language: TypeScript
+- Database: SQLite (Dev) / PostgreSQL (Prod) via Prisma ORM
+- Authentication: JWT + bcrypt
+- Real-time: Socket.IO (for Battles)
+- Email: Nodemailer (Gmail Service)
+
+IDE / TOOLS:
+- Package Manager: npm
+- Version Control: Git
+
+=============================================
+KEY FEATURES
+=============================================
+
+1. AUTHENTICATION SYSTEM
+   - Sign up with Email/Username
+   - Email Verification (SMTP via Gmail)
+   - Login (Username or Email support)
+   - Forgot Password / Reset Password flows
+   - Secure Password Hashing (bcrypt)
+   - Session Management (JWT)
+
+2. USER PROFILES
+   - Detailed Profile Page (`/profile/[username]`)
+   - Statistics: Rating, Battle Rating, Solved Count
+   - Submission Activity Heatmap (GitHub style)
+   - Country Flags & Rankings
+   - "BrainType" Integration (Cognitive Style Analysis)
+
+3. RANKING SYSTEM
+   - Global Leaderboard
+   - Filter by: Contest Rating vs Battle Rating
+   - Filter by: Country
+   - Filter by: Friends / Following
+   - Search functionality
+
+4. COMPETITIVE FEATURES (Planned/In-Progress)
+   - Problems Archive (Codeforces style difficulty)
+   - Contests (Scheduled events)
+   - Battles (1v1, Team, Blitz formats)
+
+5. SCHOOL MODE (SaaS)
+   - Special module for educational institutions to host their own judges.
+
+=============================================
+PROJECT STRUCTURE
+=============================================
+
+conjudge-platform/
+├── frontend/               # Next.js Client Application
+│   ├── src/
+│   │   ├── app/            # App Router (Pages)
+│   │   ├── components/     # Reusable UI Components
+│   │   ├── context/        # Global State (Auth)
+│   │   ├── messages/       # Translation JSONs (az.json, en.json...)
+│   │   └── lib/            # Utilities
+│
+├── backend/                # Express Server Application
+│   ├── src/
+│   │   ├── routes/         # API Endpoints (auth, users, problems...)
+│   │   ├── utils/          # Helpers (email.ts, etc.)
+│   │   └── index.ts        # Entry Point
+│   ├── prisma/
+│   │   └── schema.prisma   # Database Schema Definition
+│   └── scripts/            # Admin/Maintenance scripts
+│
+└── start.sh                # Main startup script
+
+=============================================
+CONFIGURATION
+=============================================
+
+ENVIRONMENT VARIABLES (.env):
+- DATABASE_URL: Path to SQLite DB or Postgres Connection String
+- JWT_SECRET: Secret key for token generation
+- GMAIL_USER / GMAIL_PASS: SMTP Credentials for emails
+- FRONTEND_URL: URL of the client (e.g., http://localhost:3000)
+- PORT: Backend port (default: 5000)
+
+=============================================
+CURRENT STATUS
+=============================================
+- [x] Basic UI/UX Design (Dark Mode)
+- [x] Full Auth Flow (Signup -> Verify -> Login -> Forgot Pass)
+- [x] User Profile & Settings
+- [x] Global Rankings Page
+- [ ] Problem Submission Engine (Judge)
+- [ ] Real-time Battle Socket Logic
+- [ ] Admin Dashboard (Under Construction)
