@@ -1,0 +1,229 @@
+{
+    "nav": {
+        "features": "Xüsusiyyətlər",
+        "braintype": "BrainType",
+        "mission": "Missiyamız"
+    },
+    "hero": {
+        "title": "Kodlaşdırma",
+        "evolution": "Təkamülü",
+        "subtitle": "Süni intellekt dəstəkli analiz, real vaxtlı döyüşlər və unikal BrainType sistemi ilə yeni nəsil kodlaşdırma təcrübəsi.",
+        "getStarted": "İndi Başla",
+        "login": "Giriş"
+    },
+    "common": {
+        "rating": "Reytinq",
+        "battleRating": "Döyüş Reytinqi",
+        "solved": "Həll Edildi",
+        "battles": "Döyüşlər",
+        "brainType": "BrainType",
+        "recentActivity": "Son Fəaliyyət",
+        "statistics": "Statistika",
+        "viewAll": "Hamısına Bax",
+        "welcome": "Xoş gəldiniz",
+        "rankings": "Sıralama",
+        "country": "Ölkə",
+        "globalRank": "Qlobal Sıra",
+        "countryRank": "Ölkə Sırası",
+        "friends": "Dostlar",
+        "follow": "İzlə",
+        "unfollow": "İzləməni dayandır",
+        "editProfile": "Profili Düzəlt",
+        "save": "Yadda saxla",
+        "cancel": "Ləğv et",
+        "searchPlaceholder": "İstifadəçi axtar...",
+        "friendsOnly": "Yalnız Dostlar"
+    },
+    "profile": {
+        "editProfile": "Profili Düzəlt",
+        "username": "İstifadəçi adı",
+        "usernameCannotChange": "İstifadəçi adı dəyişdirilə bilməz.",
+        "name": "Ad",
+        "namePlaceholder": "Tam adınız",
+        "newPassword": "Yeni Şifrə (İstəyə görə)",
+        "passwordPlaceholder": "Cari şifrəni saxlamaq üçün boş buraxın",
+        "country": "Ölkə",
+        "countryPlaceholder": "məsələn: Azərbaycan",
+        "countryOnce": "Ölkə yalnız bir dəfə təyin edilə bilər.",
+        "bio": "Bio",
+        "bioPlaceholder": "Özünüz haqqında yazın...",
+        "saveChanges": "Dəyişiklikləri Yadda Saxla",
+        "saving": "Yadda saxlanılır...",
+        "contestRating": "Yarış Reytinqi",
+        "battleRating": "Döyüş Reytinqi",
+        "solved": "Həll Edildi",
+        "friends": "Dostlar",
+        "lastVisit": "Son ziyarət",
+        "registered": "Qeydiyyat",
+        "follow": "İzlə",
+        "unfollow": "İzləməyi dayandır",
+        "noBio": "Hələ bio yoxdur."
+    },
+    "login": {
+        "title": "Xoş Gəldiniz",
+        "subtitle": "Davam etmək üçün giriş edin",
+        "email": "E-poçt",
+        "password": "Şifrə",
+        "rememberMe": "Məni xatırla",
+        "forgotPassword": "Şifrəni unutmusuz?",
+        "loginButton": "Giriş",
+        "noAccount": "Hesabınız yoxdur?",
+        "signUpLink": "Qeydiyyat",
+        "orContinueWith": "və ya davam edin",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "signup": {
+        "title": "Hesab Yarat",
+        "subtitle": "ConJudge ailəsinə qoşul",
+        "username": "İstifadəçi adı",
+        "email": "E-poçt",
+        "password": "Şifrə",
+        "confirmPassword": "Şifrəni Təsdiqlə",
+        "signUpButton": "Qeydiyyatdan Keç",
+        "haveAccount": "Artıq hesabınız var?",
+        "loginLink": "Giriş",
+        "orContinueWith": "və ya davam edin",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "dashboard": {
+        "welcome": "Xoş gəldiniz",
+        "rating": "Reytinq",
+        "solved": "Həll Edildi",
+        "battles": "Döyüşlər",
+        "brainType": "BrainType Profili",
+        "recentActivity": "Son Fəaliyyət",
+        "statistics": "Statistika",
+        "viewAll": "Hamısına Bax"
+    },
+    "battles": {
+        "title": "Real-vaxt Kod Döyüşləri",
+        "subtitle": "ConJudge proqramlaşdırmanı sadəcə test keçmək deyil, canlı yarışa çevirir.",
+        "startBattleTitle": "Yeni Döyüş Başlat",
+        "startBattleDesc": "Rəqiblərinizlə real-time kod yazaraq yarışın!",
+        "formats": "Döyüş Formatları",
+        "formatList": {
+            "duel": "1v1 Duel",
+            "team": "Komanda Döyüşü",
+            "blitz": "Blits (qısa vaxt)",
+            "mirror": "Güzgü Oyunu",
+            "replay": "Təkrar və Analiz"
+        },
+        "description": "Döyüş zamanı rəqibin proqressini görə bilərsiniz və AI analiz edir.",
+        "createBattle": "Döyüş Yarat",
+        "joinBattle": "Qoşul",
+        "myBattles": "Mənim Döyüşlərim"
+    },
+    "braintype": {
+        "title": "BrainType — Koqnitiv Analiz Sistemi",
+        "subtitle": "ConJudge yalnız nəticələri deyil, düşüncə tərzini də analiz edir.",
+        "description": "AI hər bir istifadəçinin kodlaşdırma davranışını öyrənir və aşağıdakı parametrləri qiymətləndirir:",
+        "parameters": {
+            "strengths": "Güclü Tərəflər",
+            "weaknesses": "Zəif Tərəflər",
+            "errorPatterns": "Xəta Nümunələri",
+            "speedFocus": "Sürət və Fokus",
+            "pressurePerformance": "Təzyiq Altında",
+            "strategicApproach": "Strateji Yanaşma"
+        },
+        "result": "Nəticədə hər kəs üçün unikal beyin profili yaranır. Bu profil gələcək məşq planlarının formalaşmasında əsas rol oynayır.",
+        "viewProfile": "Profilə Bax",
+        "analyzeCode": "Kodu Analiz Et"
+    },
+    "features": {
+        "title": "Proqramçılar üçün Yeni Arena",
+        "subtitle": "ConJudge, dinamik və dərin rəqabətli proqramlaşdırma təcrübəsi təmin etmək üçün sıfırdan hazırlanmışdır. Platformamız sadəcə doğru cavabı tapmaq haqqında deyil; ora necə çatdığınızı başa düşmək haqqındadır.",
+        "aiAnalysis": {
+            "title": "Süni İntellekt Analizi",
+            "description": "Kodunuzun performansı, mürəkkəbliyi və üslubu haqqında dərin məlumat əldə edin. AI sizə zəif tərəflərinizi müəyyən etmək və problem həll etmə texnikalarınızı təkmilləşdirmək üçün fərdiləşdirilmiş rəy verir."
+        },
+        "realTimeBattles": {
+            "title": "Real-vaxt Döyüşləri",
+            "description": "Həyəcanlı, canlı kodlaşdırma duellərində iştirak edin. Sürət və dəqiqliyinizi real rəqabət mühitində yoxlayın."
+        },
+        "dynamicDifficulty": {
+            "title": "Dinamik Çətinlik",
+            "description": "Sistem sizə uyğunlaşır. Şəxsi bacarıq səviyyənizə mükəmməl uyğunlaşdırılmış çətinliklərlə üzləşin, bu da sizin hər zaman öyrənməyə davam etməyinizi təmin edir."
+        },
+        "automatedProblems": {
+            "title": "Avtomatlaşdırılmış Məsələlər",
+            "description": "Həll edəcək məsələ heç vaxt bitmir. Platformamız müxtəlif sahələr üzrə sonsuz sayda unikal, yüksək keyfiyyətli məsələlər yaradır."
+        },
+        "brainTypeRanking": {
+            "title": "BrainType Sıralaması",
+            "description": "Sadə reytinqlərdən kənara çıxın. Bizim xüsusi BrainType sistemimiz proqramçı kimi koqnitiv güclü və zəif tərəflərinizi müəyyən etmək üçün problem həll etmə nümunələrinizi analiz edir."
+        },
+        "communityDriven": {
+            "title": "İcma Əsaslı",
+            "description": "Ehtiraslı proqramçılar icmasına qoşulun. Əməkdaşlıq edin, həll yollarını müzakirə edin, forumlarda iştirak edin və həmkarlarınızdan öyrənin."
+        }
+    },
+    "mission": {
+        "title": "Missiyamız: Reytinqlərdən Daha Artığı",
+        "description": "Biz inanırıq ki, rəqabətli proqramlaşdırma sadəcə bir idman deyil; bu, koqnitiv inkişaf üçün güclü bir vasitədir. ConJudge, diqqəti sadə reytinqlərdən öz problem həll etmə zəkasını daha dərindən dərk etməyə yönəltmək üçün yaradılmışdır. Missiyamız proqramçıları təkcə sınağa çəkən deyil, həm də onlara özünüdərk bəxş edən, daha effektiv, düşüncəli və uyğunlaşa bilən mütəfəkkirlər kimi yetişmələrinə kömək edən bir platforma təmin etməkdir."
+    },
+    "cta": {
+        "title": "Sərhədlərinizi Aşmağa Hazırsınız? İndi Qoşulun.",
+        "subtitle": "Bu gün qeydiyyatdan keçin və BrainType-ınızı kəşf edin.",
+        "signUp": "Qeydiyyat",
+        "login": "Giriş"
+    },
+    "footer": {
+        "terms": "İstifadə Şərtləri",
+        "privacy": "Məxfilik Siyasəti",
+        "contact": "Bizimlə Əlaqə",
+        "copyright": "© 2025 ConJudge. Bütün hüquqlar qorunur."
+    },
+    "verifyEmail": {
+        "title": "E-poçtunuzu Təsdiqləyin",
+        "verifying": "Təsdiqlənir...",
+        "success": "E-poçt Təsdiqləndi!",
+        "successDesc": "Giriş səhifəsinə yönləndirilirsiniz...",
+        "error": "Təsdiqləmə Uğursuz Oldu",
+        "errorDesc": "Link səhvdir və ya müddəti bitib.",
+        "sentTitle": "E-poçtunuzu yoxlayın",
+        "sentMessage": "Təsdiq linki göndərildi:",
+        "spamNote": "Spam qutusunu yoxlamağı unutmayın.",
+        "backToLogin": "Girişə qayıt"
+    },
+    "forgotPasswordPage": {
+        "title": "Şifrəni Sıfırla",
+        "subtitle": "E-poçt və ya istifadəçi adınızı daxil edin.",
+        "emailPlaceholder": "E-poçt və ya İstifadəçi adı",
+        "sendLink": "Sıfırlama Linki Göndər",
+        "sending": "Göndərilir...",
+        "successTitle": "E-poçtunuzu yoxlayın",
+        "successDesc": "Sıfırlama linki göndərildi.",
+        "backToLogin": "Girişə qayıt",
+        "userNotFound": "İstifadəçi tapılmadı."
+    },
+    "resetPasswordPage": {
+        "title": "Yeni Şifrə",
+        "newPassword": "Yeni Şifrə",
+        "confirmPassword": "Şifrəni Təsdiqlə",
+        "setNewPassword": "Yeni Şifrə Təyin Et",
+        "resetting": "Sıfırlanır...",
+        "success": "Şifrə Sıfırlandı!",
+        "successDesc": "İndi yeni şifrə ilə giriş edə bilərsiniz.",
+        "error": "Xəta baş verdi. Link köhnəlmiş ola bilər.",
+        "mismatch": "Şifrələr uyğun gəlmir"
+    },
+    "school": {
+        "title": "Məktəb Modu",
+        "subtitle": "Məktəblər və təhsil müəssisələri üçün xüsusi SaaS modulu.",
+        "description": "Hər bir məktəb öz online hakim sistemini qura bilər:",
+        "features": {
+            "domain": "Xüsusi Domen və Logo",
+            "teacherPanel": "Müəllim Paneli",
+            "analytics": "Tələbə Analitikası",
+            "contests": "Yerli Yarışlar",
+            "antiCheat": "Anti-Cheat Sistemi",
+            "homework": "Avtomatik Ev Tapşırığı",
+            "scoreboard": "Şəxsi Liderlər Cədvəli"
+        },
+        "conclusion": "Bu xüsusiyyət ConJudge-u sadəcə fərdi yarış platforması deyil, həm də tam təhsil məhsuluna çevirir.",
+        "createSchool": "Məktəb Yarat",
+        "manageSchool": "İdarə Et"
+    }
+}

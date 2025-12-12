@@ -1,0 +1,137 @@
+{
+    "nav": {
+        "features": "Fonctionnalités",
+        "braintype": "Type de Cerveau",
+        "mission": "Notre Mission"
+    },
+    "hero": {
+        "title": "L'",
+        "evolution": "Évolution",
+        "subtitle": "Découvrez la prochaine génération de défis de codage avec une analyse basée sur l'IA, des batailles multijoueurs en temps réel et notre système de classement cognitif unique BrainType.",
+        "getStarted": "Commencer Maintenant",
+        "login": "Connexion"
+    },
+    "features": {
+        "title": "Une Nouvelle Arène pour les Codeurs",
+        "subtitle": "ConJudge est conçu de A à Z pour offrir une expérience de programmation compétitive dynamique et perspicace. Notre plateforme ne consiste pas seulement à trouver la bonne réponse; il s'agit de comprendre comment vous y arrivez.",
+        "aiAnalysis": {
+            "title": "Analyse Basée sur l'IA",
+            "description": "Obtenez des informations approfondies sur les performances, la complexité et le style de votre code. Notre IA fournit des commentaires personnalisés pour vous aider à identifier les faiblesses et à affiner vos techniques de résolution de problèmes."
+        },
+        "realTimeBattles": {
+            "title": "Batailles en Temps Réel",
+            "description": "Participez à des duels de codage passionnants, en direct et tête-à-tête. Testez votre vitesse et votre précision contre vos pairs dans un environnement au rythme rapide qui simule la pression concurrentielle du monde réel."
+        },
+        "dynamicDifficulty": {
+            "title": "Difficulté Dynamique",
+            "description": "Notre système s'adapte à vous. Faites face à des défis parfaitement adaptés à votre niveau de compétence personnel, en vous assurant que vous êtes toujours engagé et que vous apprenez, jamais submergé ou ennuyé."
+        },
+        "automatedProblems": {
+            "title": "Problèmes Automatisés",
+            "description": "Ne manquez jamais de défis. Notre plateforme génère une offre illimitée de problèmes uniques de haute qualité dans divers domaines, garantissant que du contenu frais est toujours disponible."
+        },
+        "brainTypeRanking": {
+            "title": "Classement du Type de Cerveau",
+            "description": "Allez au-delà des simples évaluations. Notre système propriétaire BrainType analyse vos modèles de résolution de problèmes pour identifier vos forces et faiblesses cognitives en tant que programmeur."
+        },
+        "communityDriven": {
+            "title": "Axé sur la Communauté",
+            "description": "Rejoignez une communauté dynamique de programmeurs passionnés. Collaborez, discutez des solutions, participez aux forums et apprenez des connaissances collectives de vos pairs."
+        }
+    },
+    "mission": {
+        "title": "Notre Mission : Au-delà des Rangs et des Évaluations",
+        "description": "Nous croyons que la programmation compétitive est plus qu'un simple sport; c'est un outil puissant pour le développement cognitif. ConJudge a été créé pour déplacer l'attention des classements purs vers une compréhension plus profonde de son propre esprit de résolution de problèmes. Notre mission est de fournir une plateforme qui non seulement défie les programmeurs, mais les responsabilise également avec une conscience de soi, les aidant à devenir des penseurs plus efficaces, perspicaces et adaptatifs."
+    },
+    "cta": {
+        "title": "Prêt à redéfinir vos limites ? Rejoignez-nous maintenant.",
+        "subtitle": "Inscrivez-vous aujourd'hui pour commencer votre voyage et découvrir votre Type de Cerveau.",
+        "signUp": "S'inscrire",
+        "login": "Connexion"
+    },
+    "footer": {
+        "terms": "Conditions d'utilisation",
+        "privacy": "Politique de confidentialité",
+        "contact": "Contactez-nous",
+        "copyright": "© 2025 ConJudge. Tous droits réservés."
+    },
+    "login": {
+        "title": "Bienvenue",
+        "subtitle": "Connectez-vous à votre compte pour continuer",
+        "email": "E-mail",
+        "password": "Mot de passe",
+        "rememberMe": "Se souvenir de moi",
+        "forgotPassword": "Mot de passe oublié?",
+        "loginButton": "Connexion",
+        "noAccount": "Vous n'avez pas de compte?",
+        "signUpLink": "S'inscrire",
+        "orContinueWith": "ou continuer avec",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "signup": {
+        "title": "Créer un Compte",
+        "subtitle": "Commencez votre voyage de codage",
+        "username": "Nom d'utilisateur",
+        "email": "E-mail",
+        "password": "Mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "signUpButton": "S'inscrire",
+        "haveAccount": "Vous avez déjà un compte?",
+        "loginLink": "Connexion",
+        "orContinueWith": "ou continuer avec",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "verifyEmail": {
+        "title": "Vérifiez Votre Email",
+        "verifying": "Vérification in cours...",
+        "success": "Email Vérifié !",
+        "successDesc": "Redirection vers la connexion...",
+        "error": "Échec de la Vérification",
+        "errorDesc": "Jeton invalide ou expiré.",
+        "sentTitle": "Vérifiez Votre Email",
+        "sentMessage": "Lien de vérification envoyé à :",
+        "spamNote": "N'oubliez pas de vérifier vos spams.",
+        "backToLogin": "Retour à la Connexion"
+    },
+    "forgotPasswordPage": {
+        "title": "Réinitialiser le Mot de Passe",
+        "subtitle": "Entrez votre email ou nom d'utilisateur.",
+        "emailPlaceholder": "Email ou Nom d'utilisateur",
+        "sendLink": "Envoyer le Lien",
+        "sending": "Envoi...",
+        "successTitle": "Vérifiez votre email",
+        "successDesc": "Lien de réinitialisation envoyé.",
+        "backToLogin": "Retour à la Connexion",
+        "userNotFound": "Utilisateur introuvable."
+    },
+    "resetPasswordPage": {
+        "title": "Nouveau Mot de Passe",
+        "newPassword": "Nouveau Mot de Passe",
+        "confirmPassword": "Confirmer le Mot de Passe",
+        "setNewPassword": "Définir le Nouveau Mot de Passe",
+        "resetting": "Réinitialisation...",
+        "success": "Mot de Passe Réinitialisé !",
+        "successDesc": "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+        "error": "Une erreur est survenue. Le lien a peut-être expiré.",
+        "mismatch": "Les mots de passe ne correspondent pas"
+    },
+    "school": {
+        "title": "Mode Scolaire",
+        "subtitle": "Module SaaS spécial pour les écoles et les établissements d'enseignement.",
+        "description": "Chaque école peut créer son propre système de juge en ligne :",
+        "features": {
+            "domain": "Domaine & Logo Personnalisés",
+            "teacherPanel": "Panneau Enseignant",
+            "analytics": "Analytique des Étudiants",
+            "contests": "Concours Locaux",
+            "antiCheat": "Système Anti-Triche",
+            "homework": "Générateur de Devoirs Automatisé",
+            "scoreboard": "Classement Privé"
+        },
+        "conclusion": "Cette fonctionnalité transforme ConJudge non seulement en une plateforme de compétition individuelle, mais aussi en un produit éducatif complet.",
+        "createSchool": "Créer une École",
+        "manageSchool": "Gérer"
+    }
+}

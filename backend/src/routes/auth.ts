@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
+import passport from 'passport';
 import crypto from 'crypto';
 import { sendEmail } from '../utils/email';
 
@@ -32,6 +33,7 @@ router.post('/signup', async (req: Request, res: Response): Promise<any> => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const verificationToken = crypto.randomBytes(32).toString('hex');
+
 
         const user = await prisma.user.create({
             data: {
@@ -131,6 +133,11 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
             return res.status(403).json({ error: 'Please verify your email address first.' });
         }
 
+        // If user logged in via OAuth, they might not have a password
+        if (!user.password) {
+            return res.status(400).json({ error: 'This account uses social login. Please sign in with Google/GitHub.' });
+        }
+
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -158,7 +165,8 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
                 email: user.email,
                 rating: user.rating,
                 brainType: user.brainType,
-                role: user.role
+                role: user.role,
+                needsUsernameSetup: user.needsUsernameSetup
             }
         });
     } catch (error) {
@@ -281,6 +289,7 @@ router.get('/me', async (req: Request, res: Response): Promise<any> => {
                 rating: true,
                 brainType: true,
                 role: true,
+                needsUsernameSetup: true,
                 createdAt: true
             }
         });
@@ -295,5 +304,91 @@ router.get('/me', async (req: Request, res: Response): Promise<any> => {
         res.status(401).json({ error: 'Invalid token' });
     }
 });
+
+// Complete Profile (Set Username)
+router.post('/complete-profile', async (req: Request, res: Response): Promise<any> => {
+    try {
+        const token = req.headers.authorization?.replace('Bearer ', '');
+
+        if (!token) {
+            return res.status(401).json({ error: 'No token provided' });
+        }
+
+        const decoded: any = jwt.verify(token, JWT_SECRET);
+        const { username } = req.body;
+
+        if (!username || username.length < 3) {
+            return res.status(400).json({ error: 'Username must be at least 3 characters long' });
+        }
+
+        // Check if username is taken
+        const existingUser = await prisma.user.findUnique({ where: { username } });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username is already taken' });
+        }
+
+        // Update user
+        const updatedUser = await prisma.user.update({
+            where: { id: decoded.id },
+            data: {
+                username,
+                needsUsernameSetup: false
+            }
+        });
+
+        res.json({
+            message: 'Profile completed successfully',
+            user: {
+                id: updatedUser.id,
+                username: updatedUser.username,
+                email: updatedUser.email,
+                rating: updatedUser.rating,
+                brainType: updatedUser.brainType,
+                role: updatedUser.role,
+                needsUsernameSetup: false
+            }
+        });
+
+    } catch (error) {
+        console.error('Complete profile error:', error);
+        res.status(500).json({ error: 'Failed to update profile' });
+    }
+});
+
+// Google OAuth
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback',
+    passport.authenticate('google', { failureRedirect: `${FRONTEND_URL}/login?error=auth_failed` }),
+    (req: any, res: Response) => {
+        // Successful authentication
+        const user = req.user;
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+        // Redirect to frontend with token
+        res.redirect(`${FRONTEND_URL}/login?token=${token}`);
+    }
+);
+
+// GitHub OAuth
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+router.get('/github/callback',
+    passport.authenticate('github', { failureRedirect: `${FRONTEND_URL}/login?error=auth_failed` }),
+    (req: any, res: Response) => {
+        // Successful authentication
+        const user = req.user;
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+        // Redirect to frontend with token
+        res.redirect(`${FRONTEND_URL}/login?token=${token}`);
+    }
+);
 
 export default router;

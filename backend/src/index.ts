@@ -32,6 +32,20 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Session & Passport
+import session from 'express-session';
+import passport from './config/passport';
+
+app.use(session({
+    secret: process.env.JWT_SECRET || 'secret_key_session',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/problems', problemRoutes);

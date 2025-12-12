@@ -1,0 +1,204 @@
+{
+    "nav": {
+        "features": "Özellikler",
+        "braintype": "BrainType",
+        "mission": "Misyonumuz"
+    },
+    "hero": {
+        "title": "Kodlamanın",
+        "evolution": "Evrimi",
+        "subtitle": "Yapay zeka destekli analiz, gerçek zamanlı savaşlar ve benzersiz BrainType sistemi ile yeni nesil kodlama deneyimi.",
+        "getStarted": "Şimdi Başla",
+        "login": "Giriş"
+    },
+    "common": {
+        "rating": "Derecelendirme",
+        "battleRating": "Savaş Puanı",
+        "solved": "Çözüldü",
+        "battles": "Savaşlar",
+        "brainType": "BrainType",
+        "recentActivity": "Son Aktivite",
+        "statistics": "İstatistikler",
+        "viewAll": "Hepsini Gör",
+        "welcome": "Hoşgeldiniz",
+        "rankings": "Sıralama",
+        "country": "Ülke",
+        "globalRank": "Küresel Sıra",
+        "countryRank": "Ülke Sırası",
+        "friends": "Arkadaşlar",
+        "follow": "Takip Et",
+        "unfollow": "Takipten Çık",
+        "editProfile": "Profili Düzenle",
+        "save": "Kaydet",
+        "cancel": "İptal",
+        "searchPlaceholder": "Kullanıcı ara...",
+        "friendsOnly": "Sadece Arkadaşlar"
+    },
+    "login": {
+        "title": "Hoş Geldiniz",
+        "subtitle": "Devam etmek için giriş yapın",
+        "email": "E-posta",
+        "password": "Şifre",
+        "rememberMe": "Beni hatırla",
+        "forgotPassword": "Şifrenizi mi unuttunuz?",
+        "loginButton": "Giriş",
+        "noAccount": "Hesabınız yok mu?",
+        "signUpLink": "Kayıt Ol",
+        "orContinueWith": "veya şununla devam et",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "signup": {
+        "title": "Hesap Oluştur",
+        "subtitle": "ConJudge ailesine katıl",
+        "username": "Kullanıcı Adı",
+        "email": "E-posta",
+        "password": "Şifre",
+        "confirmPassword": "Şifreyi Onayla",
+        "signUpButton": "Kayıt Ol",
+        "haveAccount": "Zaten hesabınız var mı?",
+        "loginLink": "Giriş",
+        "orContinueWith": "veya şununla devam et",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "dashboard": {
+        "welcome": "Hoşgeldiniz",
+        "rating": "Derece",
+        "solved": "Çözüldü",
+        "battles": "Savaşlar",
+        "brainType": "BrainType Profili",
+        "recentActivity": "Son Aktivite",
+        "statistics": "İstatistikler",
+        "viewAll": "Tümünü Gör"
+    },
+    "battles": {
+        "title": "Gerçek Zamanlı Kod Savaşları",
+        "subtitle": "ConJudge, programlamayı sadece test geçmekten öte, canlı bir rekabete dönüştürür.",
+        "startBattleTitle": "Yeni Savaş Başlat",
+        "startBattleDesc": "Rakiplerinizle gerçek zamanlı kod yazarak yarışın!",
+        "formats": "Savaş Formatları",
+        "formatList": {
+            "duel": "1v1 Düello",
+            "team": "Takım Savaşı",
+            "blitz": "Yıldırım (kısa süre)",
+            "mirror": "Ayna Maçı",
+            "replay": "Tekrar ve Analiz"
+        },
+        "description": "Savaş sırasında rakibin ilerlemesini görebilirsiniz ve yapay zeka analiz eder.",
+        "createBattle": "Savaş Oluştur",
+        "joinBattle": "Katıl",
+        "myBattles": "Savaşlarım"
+    },
+    "braintype": {
+        "title": "BrainType — Bilişsel Analiz Sistemi",
+        "subtitle": "ConJudge sadece sonuçları değil, düşünme kalıplarını da analiz eder.",
+        "description": "Yapay zeka her kullanıcının kodlama davranışını öğrenir ve aşağıdaki parametreleri değerlendirir:",
+        "parameters": {
+            "strengths": "Güçlü Yönler",
+            "weaknesses": "Zayıf Yönler",
+            "errorPatterns": "Hata Kalıpları",
+            "speedFocus": "Hız ve Odaklanma",
+            "pressurePerformance": "Baskı Altında Performans",
+            "strategicApproach": "Stratejik Yaklaşım"
+        },
+        "result": "Sonuç olarak, herkes için benzersiz bir beyin profili oluşturulur. Bu profil, gelecekteki eğitim planlarının şekillendirilmesinde kilit bir rol oynar.",
+        "viewProfile": "Profili Görüntüle",
+        "analyzeCode": "Kodu Analiz Et"
+    },
+    "features": {
+        "title": "Yazılımcılar için Yeni Bir Arena",
+        "subtitle": "ConJudge, dinamik ve kapsamlı bir rekabetçi programlama deneyimi sunmak için sıfırdan tasarlandı. Platformumuz sadece doğru cevabı bulmakla ilgili değil; oraya nasıl ulaştığınızı anlamakla ilgilidir.",
+        "aiAnalysis": {
+            "title": "Yapay Zeka Destekli Analiz",
+            "description": "Kodunuzun performansı, karmaşıklığı ve stili hakkında derinlemesine bilgi edinin. Yapay zeka, zayıf yönlerinizi belirlemenize ve problem çözme tekniklerinizi geliştirmenize yardımcı olmak için kişiselleştirilmiş geri bildirim sağlar."
+        },
+        "realTimeBattles": {
+            "title": "Gerçek Zamanlı Savaşlar",
+            "description": "Heyecan verici, canlı kodlama düellolarına katılın. Gerçek dünyadaki rekabet baskısını simüle eden hızlı tempolu bir ortamda hızınızı ve doğruluğunuzu test edin."
+        },
+        "dynamicDifficulty": {
+            "title": "Dinamik Zorluk",
+            "description": "Sistem size uyum sağlar. Kişisel beceri seviyenize mükemmel şekilde ayarlanmış zorluklarla karşılaşın, böylece her zaman meşgul olur ve öğrenirsiniz, asla bunalmaz veya sıkılmazsınız."
+        },
+        "automatedProblems": {
+            "title": "Otomatik Problemler",
+            "description": "Çözülecek problem asla bitmez. Platformumuz, taze içeriğin her zaman mevcut olmasını sağlayarak çeşitli alanlarda sınırsız sayıda benzersiz, yüksek kaliteli problem üretir."
+        },
+        "brainTypeRanking": {
+            "title": "BrainType Sıralaması",
+            "description": "Basit derecelendirmelerin ötesine geçin. Tescilli BrainType sistemimiz, bir programcı olarak bilişsel güçlü ve zayıf yönlerinizi belirlemek için problem çözme kalıplarınızı analiz eder."
+        },
+        "communityDriven": {
+            "title": "Topluluk Odaklı",
+            "description": "Tutkulu programcılardan oluşan canlı bir topluluğa katılın. İşbirliği yapın, çözümleri tartışın, forumlara katılın ve meslektaşlarınızın kolektif bilgisinden öğrenin."
+        }
+    },
+    "mission": {
+        "title": "Misyonumuz: Sıralamaların Ötesinde",
+        "description": "Biz, rekabetçi programlamanın sadece bir spor olmadığına, bilişsel gelişim için güçlü bir araç olduğuna inanıyoruz. ConJudge, odağı saf sıralamalardan kişinin kendi problem çözme zihnini daha derinlemesine anlamasına kaydırmak için yaratıldı. Misyonumuz, programcıları sadece zorlayan değil, aynı zamanda onlara farkındalık kazandıran, daha etkili, içgörülü ve uyarlanabilir düşünürler haline gelmelerine yardımcı olan bir platform sağlamaktır."
+    },
+    "cta": {
+        "title": "Sınırlarınızı Yeniden Tanımlamaya Hazır mısınız? Şimdi Katılın.",
+        "subtitle": "Bugün kaydolun ve BrainType'ınızı keşfedin.",
+        "signUp": "Kayıt Ol",
+        "login": "Giriş"
+    },
+    "footer": {
+        "terms": "Kullanım Şartları",
+        "privacy": "Gizlilik Politikası",
+        "contact": "İletişim",
+        "copyright": "© 2025 ConJudge. Tüm hakları saklıdır."
+    },
+    "verifyEmail": {
+        "title": "E-postanızı Doğrulayın",
+        "verifying": "Doğrulanıyor...",
+        "success": "E-posta Doğrulandı!",
+        "successDesc": "Giriş sayfasına yönlendiriliyorsunuz...",
+        "error": "Doğrulama Başarısız",
+        "errorDesc": "Geçersiz veya süresi dolmuş belirteç.",
+        "sentTitle": "E-postanızı Kontrol Edin",
+        "sentMessage": "Doğrulama bağlantısı şuraya gönderildi:",
+        "spamNote": "Spam klasörünü kontrol etmeyi unutmayın.",
+        "backToLogin": "Girişe Dön"
+    },
+    "forgotPasswordPage": {
+        "title": "Şifreyi Sıfırla",
+        "subtitle": "E-posta veya kullanıcı adınızı girin.",
+        "emailPlaceholder": "E-posta veya Kullanıcı Adı",
+        "sendLink": "Sıfırlama Bağlantısı Gönder",
+        "sending": "Gönderiliyor...",
+        "successTitle": "E-postanızı kontrol edin",
+        "successDesc": "Sıfırlama bağlantısı gönderildi.",
+        "backToLogin": "Girişe Dön",
+        "userNotFound": "Kullanıcı bulunamadı."
+    },
+    "resetPasswordPage": {
+        "title": "Yeni Şifre",
+        "newPassword": "Yeni Şifre",
+        "confirmPassword": "Şifreyi Onayla",
+        "setNewPassword": "Yeni Şifre Belirle",
+        "resetting": "Sıfırlanıyor...",
+        "success": "Şifre Sıfırlandı!",
+        "successDesc": "Artık yeni şifrenizle giriş yapabilirsiniz.",
+        "error": "Hata oluştu. Bağlantı süresi dolmuş olabilir.",
+        "mismatch": "Şifreler uyuşmuyor"
+    },
+    "school": {
+        "title": "Okul Modu",
+        "subtitle": "Okullar ve eğitim kurumları için özel SaaS modülü.",
+        "description": "Her okul kendi online yargıç sistemini kurabilir:",
+        "features": {
+            "domain": "Özel Etki Alanı ve Logo",
+            "teacherPanel": "Öğretmen Paneli",
+            "analytics": "Öğrenci Performans Analitiği",
+            "contests": "Yerel Yarışmalar",
+            "antiCheat": "Anti-Hile Sistemi",
+            "homework": "Otomatik Ödev Oluşturucu",
+            "scoreboard": "Özel Liderlik Tablosu"
+        },
+        "conclusion": "Bu özellik, ConJudge'ı yalnızca bireysel bir rekabet platformuna değil, aynı zamanda eksiksiz bir eğitim ürününe dönüştürür.",
+        "createSchool": "Okul Oluştur",
+        "manageSchool": "Yönet"
+    }
+}

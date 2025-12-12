@@ -1,0 +1,222 @@
+{
+    "nav": {
+        "features": "Features",
+        "braintype": "BrainType",
+        "mission": "Our Mission"
+    },
+    "hero": {
+        "title": "The",
+        "evolution": "Evolution",
+        "subtitle": "Experience the next generation of coding challenges with AI-driven analysis, real-time multiplayer battles, and our unique BrainType cognitive ranking system.",
+        "getStarted": "Get Started Now",
+        "login": "Login"
+    },
+    "features": {
+        "title": "A New Arena for Coders",
+        "subtitle": "ConJudge is engineered from the ground up to provide a dynamic and insightful competitive programming experience. Our platform isn't just about finding the right answer; it's about understanding how you get there.",
+        "aiAnalysis": {
+            "title": "AI-Driven Analysis",
+            "description": "Get deep insights into your code's performance, complexity, and style. Our AI provides personalized feedback to help you identify weaknesses and refine your problem-solving techniques."
+        },
+        "realTimeBattles": {
+            "title": "Real-Time Battles",
+            "description": "Engage in exciting, live, head-to-head coding duels. Test your speed and accuracy against peers in a fast-paced environment that simulates real-world competitive pressure."
+        },
+        "dynamicDifficulty": {
+            "title": "Dynamic Difficulty",
+            "description": "Our system adapts to you. Face challenges that are perfectly tuned to your personal skill level, ensuring you're always engaged and learning, never overwhelmed or bored."
+        },
+        "automatedProblems": {
+            "title": "Automated Problems",
+            "description": "Never run out of challenges. Our platform generates a limitless supply of unique, high-quality problems across various domains, ensuring fresh content is always available."
+        },
+        "brainTypeRanking": {
+            "title": "BrainType Ranking",
+            "description": "Go beyond simple ratings. Our proprietary BrainType system analyzes your problem-solving patterns to identify your cognitive strengths and weaknesses as a programmer."
+        },
+        "communityDriven": {
+            "title": "Community Driven",
+            "description": "Join a vibrant community of passionate programmers. Collaborate, discuss solutions, participate in forums, and learn from the collective knowledge of your peers."
+        }
+    },
+    "mission": {
+        "title": "Our Mission: Beyond Ranks and Ratings",
+        "description": "We believe competitive programming is more than just a sport; it's a powerful tool for cognitive development. ConJudge was created to shift the focus from pure rankings to a deeper understanding of one's own problem-solving mind. Our mission is to provide a platform that not only challenges programmers but also empowers them with self-awareness, helping them grow into more effective, insightful, and adaptable thinkers."
+    },
+    "cta": {
+        "title": "Ready to Redefine Your Limits? Join Now.",
+        "subtitle": "Sign up today to start your journey and discover your BrainType.",
+        "signUp": "Sign Up",
+        "login": "Login"
+    },
+    "footer": {
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "contact": "Contact Us",
+        "copyright": "© 2025 ConJudge. All rights reserved."
+    },
+    "login": {
+        "title": "Welcome Back",
+        "subtitle": "Login to your account to continue",
+        "email": "Email",
+        "password": "Password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "loginButton": "Login",
+        "noAccount": "Don't have an account?",
+        "signUpLink": "Sign up",
+        "orContinueWith": "Or continue with",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "signup": {
+        "title": "Create Account",
+        "subtitle": "Start your coding journey",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "signUpButton": "Sign Up",
+        "haveAccount": "Already have an account?",
+        "loginLink": "Login",
+        "orContinueWith": "Or continue with",
+        "google": "Google",
+        "github": "GitHub"
+    },
+    "common": {
+        "rating": "Rating",
+        "battleRating": "Battle Rating",
+        "solved": "Solved",
+        "battles": "Battles",
+        "brainType": "BrainType",
+        "recentActivity": "Recent Activity",
+        "statistics": "Statistics",
+        "viewAll": "View All",
+        "welcome": "Welcome",
+        "rankings": "Rankings",
+        "country": "Country",
+        "globalRank": "Global Rank",
+        "countryRank": "Country Rank",
+        "friends": "Friends",
+        "follow": "Follow",
+        "unfollow": "Unfollow",
+        "searchPlaceholder": "Search user...",
+        "friendsOnly": "Friends Only"
+    },
+    "dashboard": {
+        "welcome": "Welcome",
+        "rating": "Rating",
+        "battleRating": "Battle Rating",
+        "solved": "Solved",
+        "battles": "Battles",
+        "brainType": "BrainType Profile",
+        "recentActivity": "Recent Activity",
+        "statistics": "Statistics",
+        "viewAll": "View All"
+    },
+    "braintype": {
+        "title": "BrainType — Cognitive Analysis System",
+        "subtitle": "ConJudge analyzes not just results, but thinking patterns.",
+        "description": "AI learns each user's coding behavior and evaluates parameters such as:",
+        "parameters": {
+            "strengths": "Strengths",
+            "weaknesses": "Weaknesses",
+            "errorPatterns": "Error Patterns",
+            "speedFocus": "Speed & Focus",
+            "pressurePerformance": "Under Pressure",
+            "strategicApproach": "Strategic Approach"
+        },
+        "result": "As a result, everyone gets a unique brain profile. This profile plays a key role in shaping future training plans.",
+        "viewProfile": "View Profile",
+        "analyzeCode": "Analyze Code"
+    },
+    "battles": {
+        "title": "Real-Time Coding Battles",
+        "subtitle": "ConJudge turns programming into a live competition, not just passing tests.",
+        "startBattleTitle": "Start New Battle",
+        "startBattleDesc": "Compete with rivals by writing code in real-time!",
+        "formats": "Battle Formats",
+        "formatList": {
+            "duel": "1v1 Duel",
+            "team": "Team Battles",
+            "blitz": "Blitz (short time limit)",
+            "mirror": "Mirror Match",
+            "replay": "Replay and Analysis"
+        },
+        "description": "During the battle, the user can see the opponent's progress, and AI provides extensive analysis after the competition.",
+        "createBattle": "Create Battle",
+        "joinBattle": "Join Battle",
+        "myBattles": "My Battles"
+    },
+    "problems": {
+        "title": "Problems",
+        "dynamicDifficulty": "Dynamic Problem Difficulty",
+        "dynamicDesc": "In ConJudge, problem difficulty is not fixed. The system recalculates difficulty daily based on real results.",
+        "aiGenerator": "AI Problem Generator",
+        "aiGeneratorDesc": "A special AI system within the platform can automatically generate new problems:",
+        "generatorFeatures": {
+            "description": "Problem Statement",
+            "inputOutput": "Input/Output",
+            "solution": "Solution Explanation",
+            "checker": "Checker",
+            "tests": "Test Cases",
+            "difficulty": "Difficulty Analysis",
+            "tags": "Tags"
+        },
+        "generatorNote": "Only administrator approval is required. This system turns ConJudge into a dynamically expanding platform with unlimited content.",
+        "allProblems": "All Problems",
+        "generateProblem": "Generate Problem",
+        "solveProblem": "Solve Problem"
+    },
+    "school": {
+        "title": "School Mode — Your Own OJ System",
+        "subtitle": "ConJudge presents a special SaaS module for schools and educational institutions.",
+        "description": "Every school can build its own online judge system:",
+        "features": {
+            "domain": "Custom Domain & Logo",
+            "teacherPanel": "Teacher Panel",
+            "analytics": "Student Performance Analytics",
+            "contests": "Local Contests",
+            "antiCheat": "Anti-Cheat System",
+            "homework": "Automated Homework Generator",
+            "scoreboard": "Private Scoreboard"
+        },
+        "conclusion": "This feature turns ConJudge not only into an individual competition platform but also into a complete educational product.",
+        "createSchool": "Create School",
+        "manageSchool": "Manage"
+    },
+    "verifyEmail": {
+        "title": "Verify Your Email",
+        "verifying": "Verifying...",
+        "success": "Email Verified!",
+        "successDesc": "Redirecting to login...",
+        "error": "Verification Failed",
+        "errorDesc": "Invalid or expired token.",
+        "sentTitle": "Check Your Email",
+        "sentMessage": "Verification link sent to:",
+        "spamNote": "Don't forget to check your spam folder.",
+        "backToLogin": "Back to Login"
+    },
+    "forgotPasswordPage": {
+        "title": "Reset Password",
+        "subtitle": "Enter your email or username.",
+        "emailPlaceholder": "Email or Username",
+        "sendLink": "Send Reset Link",
+        "sending": "Sending...",
+        "successTitle": "Check your email",
+        "successDesc": "Reset link sent.",
+        "backToLogin": "Back to Login",
+        "userNotFound": "User not found."
+    },
+    "resetPasswordPage": {
+        "title": "New Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "setNewPassword": "Set New Password",
+        "resetting": "Resetting...",
+        "success": "Password Reset!",
+        "successDesc": "You can now login with your new password.",
+        "error": "Error occurred. Link might be expired.",
+        "mismatch": "Passwords do not match"
+    }
+}
