@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface PopularProps {
     data: {
@@ -10,20 +11,22 @@ interface PopularProps {
 }
 
 export default function PopularProblemsTable({ data }: PopularProps) {
+    const t = useTranslations('admin');
+
     return (
         <div className="bg-[#1A1A1A] border border-white/10 rounded-xl p-6">
             <h3 className="font-bold mb-4 flex items-center gap-2">
                 <span className="material-symbols-outlined text-yellow-500">star</span>
-                Popular Problems
+                {t('popularProblems')}
             </h3>
 
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
                     <thead>
                         <tr className="text-xs text-gray-500 border-b border-white/10">
-                            <th className="pb-2">Title</th>
-                            <th className="pb-2">Diff</th>
-                            <th className="pb-2 text-right">Subs</th>
+                            <th className="pb-2">{t('columnTitle')}</th>
+                            <th className="pb-2">{t('columnDiff')}</th>
+                            <th className="pb-2 text-right">{t('columnSubs')}</th>
                         </tr>
                     </thead>
                     <tbody className="text-sm">
@@ -32,8 +35,8 @@ export default function PopularProblemsTable({ data }: PopularProps) {
                                 <td className="py-3 font-medium truncate max-w-[120px]">{i + 1}. {p.title}</td>
                                 <td className="py-3">
                                     <span className={`text-[10px] px-1.5 py-0.5 rounded border ${p.difficulty === 'Hard' ? 'border-red-500 text-red-500' :
-                                            p.difficulty === 'Medium' ? 'border-yellow-500 text-yellow-500' :
-                                                'border-green-500 text-green-500'
+                                        p.difficulty === 'Medium' ? 'border-yellow-500 text-yellow-500' :
+                                            'border-green-500 text-green-500'
                                         }`}>
                                         {p.difficulty}
                                     </span>
@@ -42,7 +45,7 @@ export default function PopularProblemsTable({ data }: PopularProps) {
                             </tr>
                         ))}
                         {data.length === 0 && (
-                            <tr><td colSpan={3} className="py-4 text-center text-gray-500">No data</td></tr>
+                            <tr><td colSpan={3} className="py-4 text-center text-gray-500">{t('noData')}</td></tr>
                         )}
                     </tbody>
                 </table>

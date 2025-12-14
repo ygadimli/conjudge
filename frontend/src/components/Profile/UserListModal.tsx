@@ -33,7 +33,7 @@ export default function UserListModal({ title, users, onClose }: UserListModalPr
                             >
                                 <div className="w-10 h-10 rounded-full bg-gray-800 border-2 border-white/10 overflow-hidden flex-shrink-0">
                                     {u.profilePicture ? (
-                                        <img src={u.profilePicture.startsWith('http') ? u.profilePicture : `${process.env.NEXT_PUBLIC_API_URL}${u.profilePicture}`} className="w-full h-full object-cover" />
+                                        <img src={u.profilePicture.startsWith('http') ? u.profilePicture : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${u.profilePicture}`} className="w-full h-full object-cover" />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-white font-bold bg-black">
                                             {u.username[0].toUpperCase()}

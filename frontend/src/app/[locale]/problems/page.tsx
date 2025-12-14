@@ -79,13 +79,13 @@ export default function ProblemsPage() {
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
                 <div className="flex flex-col md:flex-row gap-8 mb-12">
                     <div className="md:w-1/4 space-y-6">
-                        <h2 className="text-xl font-bold border-b border-white/10 pb-2">Filter Problems</h2>
+                        <h2 className="text-xl font-bold border-b border-white/10 pb-2">{t('filterTitle')}</h2>
 
                         <div>
-                            <label className="block text-sm text-gray-400 mb-2">Search</label>
+                            <label className="block text-sm text-gray-400 mb-2">{t('searchLabel')}</label>
                             <input
                                 type="text"
-                                placeholder="Problem name..."
+                                placeholder={t('searchPlaceholder')}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 className="w-full bg-[#0D0D0D] border border-white/10 rounded px-3 py-2 text-sm"
@@ -93,18 +93,18 @@ export default function ProblemsPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm text-gray-400 mb-2">Rating Range</label>
+                            <label className="block text-sm text-gray-400 mb-2">{t('ratingRange')}</label>
                             <div className="flex gap-2">
                                 <input
                                     type="number"
-                                    placeholder="Min"
+                                    placeholder={t('min')}
                                     value={minRating}
                                     onChange={(e) => setMinRating(e.target.value)}
                                     className="w-1/2 bg-[#0D0D0D] border border-white/10 rounded px-3 py-2 text-sm"
                                 />
                                 <input
                                     type="number"
-                                    placeholder="Max"
+                                    placeholder={t('max')}
                                     value={maxRating}
                                     onChange={(e) => setMaxRating(e.target.value)}
                                     className="w-1/2 bg-[#0D0D0D] border border-white/10 rounded px-3 py-2 text-sm"
@@ -113,10 +113,10 @@ export default function ProblemsPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm text-gray-400 mb-2">Tag</label>
+                            <label className="block text-sm text-gray-400 mb-2">{t('tagLabel')}</label>
                             <input
                                 type="text"
-                                placeholder="e.g. math"
+                                placeholder={t('tagPlaceholder')}
                                 value={tag}
                                 onChange={(e) => setTag(e.target.value)}
                                 className="w-full bg-[#0D0D0D] border border-white/10 rounded px-3 py-2 text-sm"
@@ -125,25 +125,25 @@ export default function ProblemsPage() {
                     </div>
 
                     <div className="md:w-3/4">
-                        <h1 className="text-3xl font-black mb-6">Problemset</h1>
+                        <h1 className="text-3xl font-black mb-6">{t('problemset')}</h1>
 
                         {loading ? (
-                            <div className="text-center py-20 text-gray-500">Loading problems...</div>
+                            <div className="text-center py-20 text-gray-500">{t('loading')}</div>
                         ) : problems.length === 0 ? (
                             <div className="text-center py-20 bg-[#0D0D0D] border border-white/10 rounded-xl">
-                                <p className="text-xl font-bold mb-2">No problems found</p>
-                                <p className="text-gray-500">Try adjusting your filters.</p>
+                                <p className="text-xl font-bold mb-2">{t('noProblems')}</p>
+                                <p className="text-gray-500">{t('noProblemsDesc')}</p>
                             </div>
                         ) : (
                             <div className="bg-[#0D0D0D] border border-white/10 rounded-xl overflow-hidden">
                                 <table className="w-full text-left">
                                     <thead className="bg-white/5 border-b border-white/10">
                                         <tr>
-                                            <th className="p-4 font-medium text-gray-400">#</th>
-                                            <th className="p-4 font-medium text-gray-400">Name</th>
-                                            <th className="p-4 font-medium text-gray-400">Tags</th>
-                                            <th className="p-4 font-medium text-gray-400">Rating</th>
-                                            <th className="p-4 font-medium text-gray-400">Action</th>
+                                            <th className="p-4 font-medium text-gray-400">{t('tableRank')}</th>
+                                            <th className="p-4 font-medium text-gray-400">{t('tableName')}</th>
+                                            <th className="p-4 font-medium text-gray-400">{t('tableTags')}</th>
+                                            <th className="p-4 font-medium text-gray-400">{t('tableRating')}</th>
+                                            <th className="p-4 font-medium text-gray-400">{t('tableAction')}</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/5">
@@ -169,7 +169,7 @@ export default function ProblemsPage() {
                                                 </td>
                                                 <td className="p-4">
                                                     <Link href={`/${locale}/problems/${prob.id}`} className="text-[#E80000] hover:underline text-sm font-medium">
-                                                        Solve
+                                                        {t('solve')}
                                                     </Link>
                                                 </td>
                                             </tr>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useTranslations } from 'next-intl';
 
 export default function AdminContests() {
+    const t = useTranslations('admin');
     const { user } = useAuth();
     const [view, setView] = useState<'LIST' | 'FORM'>('LIST');
     const [contests, setContests] = useState<any[]>([]);
@@ -48,7 +50,7 @@ export default function AdminContests() {
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm('Delete this contest?')) return;
+        if (!confirm(t('contestDeleteConfirm'))) return;
         try {
             await fetch(`${API_URL}/api/contests/${id}`, { method: 'DELETE' });
             fetchContests();
@@ -89,15 +91,15 @@ export default function AdminContests() {
             });
 
             if (res.ok) {
-                alert(editingId ? 'Contest Updated' : 'Contest Created');
+                alert(editingId ? t('contestUpdated') : t('contestCreated'));
                 fetchContests();
                 resetForm();
             } else {
                 const err = await res.json();
-                alert('Error: ' + err.error);
+                alert(t('contestError', { error: err.error }));
             }
         } catch (error) {
-            alert('Network error');
+            alert(t('contestNetworkError'));
         } finally {
             setIsSubmitting(false);
         }
@@ -107,8 +109,8 @@ export default function AdminContests() {
         return (
             <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8 animate-in fade-in">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold">Contests</h2>
-                    <button onClick={() => { resetForm(); setView('FORM'); }} className="gradient-button px-4 py-2 rounded text-white font-bold">+ Create New</button>
+                    <h2 className="text-2xl font-bold">{t('contestsTitle')}</h2>
+                    <button onClick={() => { resetForm(); setView('FORM'); }} className="gradient-button px-4 py-2 rounded text-white font-bold">+ {t('createNew')}</button>
                 </div>
                 <div className="space-y-4">
                     {contests.map(c => (
@@ -116,16 +118,16 @@ export default function AdminContests() {
                             <div>
                                 <h3 className="font-bold text-lg">{c.title}</h3>
                                 <div className="text-sm text-gray-500">
-                                    Start: {new Date(c.startTime).toLocaleString()} | Dur: {c.duration}m | Probs: {c.problems.length}
+                                    {t('contestStart')}: {new Date(c.startTime).toLocaleString()} | {t('contestDuration')}: {c.duration}m | {t('contestProbs')}: {c.problems.length}
                                 </div>
                             </div>
                             <div className="flex gap-2">
-                                <button onClick={() => handleEdit(c)} className="text-blue-500 hover:text-white text-sm bg-blue-500/10 px-3 py-1 rounded">Edit</button>
-                                <button onClick={() => handleDelete(c.id)} className="text-red-500 hover:text-white text-sm bg-red-500/10 px-3 py-1 rounded">Delete</button>
+                                <button onClick={() => handleEdit(c)} className="text-blue-500 hover:text-white text-sm bg-blue-500/10 px-3 py-1 rounded">{t('edit')}</button>
+                                <button onClick={() => handleDelete(c.id)} className="text-red-500 hover:text-white text-sm bg-red-500/10 px-3 py-1 rounded">{t('delete')}</button>
                             </div>
                         </div>
                     ))}
-                    {contests.length === 0 && <div className="text-gray-500">No contests found.</div>}
+                    {contests.length === 0 && <div className="text-gray-500">{t('contestNone')}</div>}
                 </div>
             </div>
         );
@@ -134,35 +136,35 @@ export default function AdminContests() {
     return (
         <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8 animate-in fade-in">
             <div className="flex justify-between mb-6">
-                <h2 className="text-2xl font-bold">{editingId ? 'Edit Contest' : 'Create Contest'}</h2>
-                <button onClick={resetForm} className="text-gray-400 hover:text-white">Cancel</button>
+                <h2 className="text-2xl font-bold">{editingId ? t('editContest') : t('createContest')}</h2>
+                <button onClick={resetForm} className="text-gray-400 hover:text-white">{t('cancel')}</button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="block text-sm font-medium mb-2">Contest Title</label>
+                    <label className="block text-sm font-medium mb-2">{t('contestTitleLabel')}</label>
                     <input value={title} onChange={e => setTitle(e.target.value)} className="w-full bg-black border border-white/20 rounded px-3 py-2" required />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-2">Description</label>
+                    <label className="block text-sm font-medium mb-2">{t('descriptionLabel')}</label>
                     <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full h-24 bg-black border border-white/20 rounded px-3 py-2" />
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-sm font-medium mb-2">Start Time</label>
+                        <label className="block text-sm font-medium mb-2">{t('startTimeLabel')}</label>
                         <input type="datetime-local" value={startTime} onChange={e => setStartTime(e.target.value)} className="w-full bg-black border border-white/20 rounded px-3 py-2" required />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-2">Duration (minutes)</label>
+                        <label className="block text-sm font-medium mb-2">{t('durationLabel')}</label>
                         <input type="number" value={duration} onChange={e => setDuration(Number(e.target.value))} className="w-full bg-black border border-white/20 rounded px-3 py-2" required />
                     </div>
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-2">Problem IDs (comma separated)</label>
+                    <label className="block text-sm font-medium mb-2">{t('problemIdsLabel')}</label>
                     <input value={problemIds} onChange={e => setProblemIds(e.target.value)} className="w-full bg-black border border-white/20 rounded px-3 py-2 font-mono" />
                 </div>
 
                 <button type="submit" disabled={isSubmitting} className="w-full gradient-button py-3 rounded text-white font-bold">
-                    {isSubmitting ? 'Processing...' : (editingId ? 'Update Contest' : 'Create Contest')}
+                    {isSubmitting ? t('processing') : (editingId ? t('updateContest') : t('createContest'))}
                 </button>
             </form>
         </div>

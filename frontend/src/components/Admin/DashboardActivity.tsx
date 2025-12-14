@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import {
     LineChart,
     Line,
@@ -18,13 +19,15 @@ interface ActivityProps {
 }
 
 export default function DashboardActivity({ data }: ActivityProps) {
+    const t = useTranslations('admin');
+
     return (
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
             {/* Submissions Chart */}
             <div className="bg-[#1A1A1A] border border-white/10 rounded-xl p-6">
                 <h3 className="font-bold mb-6 flex items-center gap-2">
                     <span className="material-symbols-outlined text-purple-500">trending_up</span>
-                    Submission Activity (Last 30 Days)
+                    {t('submissionActivity')}
                 </h3>
                 <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
@@ -52,7 +55,7 @@ export default function DashboardActivity({ data }: ActivityProps) {
             <div className="bg-[#1A1A1A] border border-white/10 rounded-xl p-6">
                 <h3 className="font-bold mb-6 flex items-center gap-2">
                     <span className="material-symbols-outlined text-blue-500">group_add</span>
-                    New Users (Last 30 Days)
+                    {t('newUsersActivity')}
                 </h3>
                 <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">

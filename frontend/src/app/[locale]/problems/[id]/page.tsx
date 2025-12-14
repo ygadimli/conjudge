@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useTranslations } from 'next-intl';
@@ -37,6 +38,7 @@ interface Problem {
 }
 
 export default function ProblemPage() {
+    const t = useTranslations('problemDetail');
     const params = useParams();
     const { user, loading: authLoading } = useAuth(); // User can be null
     const router = useRouter();
@@ -131,7 +133,7 @@ export default function ProblemPage() {
         setConsoleOpen(true);
         setConsoleTab('output');
         setIsRunning(true);
-        setOutput('Running...');
+        setOutput(t('running'));
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -148,15 +150,15 @@ export default function ProblemPage() {
             const data = await res.json();
             if (data.result) {
                 if (data.result.error) {
-                    setOutput(`Error:\n${data.result.error}`);
+                    setOutput(`${t('error')}:\n${data.result.error}`);
                 } else {
-                    setOutput(data.result.output || 'No output');
+                    setOutput(data.result.output || t('noOutput'));
                 }
             } else {
-                setOutput('Execution failed');
+                setOutput(t('executionFailed'));
             }
         } catch (error) {
-            setOutput('Network error');
+            setOutput(t('networkError'));
         } finally {
             setIsRunning(false);
         }
@@ -165,7 +167,7 @@ export default function ProblemPage() {
     const handleSubmit = async () => {
         if (!user) {
             // Prompt login
-            alert("Please login to submit");
+            alert(t('loginToSubmit'));
             return;
         }
 
@@ -190,7 +192,7 @@ export default function ProblemPage() {
             if (res.status === 401 || res.status === 500) {
                 const err = await res.json();
                 if (err.error && err.error.includes("Foreign key constraint")) {
-                    alert("Your session seems invalid (Database might have been reset). Please logout and Signup again.");
+                    alert(t('sessionInvalid'));
                 }
             }
 
@@ -204,8 +206,8 @@ export default function ProblemPage() {
         }
     };
 
-    if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-white">Loading...</div>;
-    if (!problem) return <div className="min-h-screen bg-black flex items-center justify-center text-white">Problem not found</div>;
+    if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-white">{t('loading')}</div>;
+    if (!problem) return <div className="min-h-screen bg-black flex items-center justify-center text-white">{t('notFound')}</div>;
 
     const getDifficultyColor = (rating: number) => {
         if (rating < 1200) return 'text-gray-400';
@@ -245,7 +247,7 @@ export default function ProblemPage() {
                         className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition-all font-medium border border-white/10 hover:border-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span className="material-symbols-outlined text-base">{isRunning ? 'hourglass_empty' : 'play_arrow'}</span>
-                        {isRunning ? 'Running...' : 'Run'}
+                        {isRunning ? t('running') : t('run')}
                     </button>
                     <button
                         onClick={handleSubmit}
@@ -253,7 +255,7 @@ export default function ProblemPage() {
                         className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white rounded-lg text-sm transition-all font-bold shadow-lg shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span className="material-symbols-outlined text-base">{isSubmitting ? 'sync' : 'cloud_upload'}</span>
-                        {isSubmitting ? 'Submitting...' : 'Submit'}
+                        {isSubmitting ? t('submitting') : t('submit')}
                     </button>
                 </div>
             </div>
@@ -267,13 +269,13 @@ export default function ProblemPage() {
                             className={`px-4 py-2 text-sm border-b-2 transition-colors ${activeTab === 'description' ? 'border-[#E80000] text-white' : 'border-transparent text-gray-500'}`}
                             onClick={() => setActiveTab('description')}
                         >
-                            Description
+                            {t('description')}
                         </button>
                         <button
                             className={`px-4 py-2 text-sm border-b-2 transition-colors ${activeTab === 'submissions' ? 'border-[#E80000] text-white' : 'border-transparent text-gray-500'}`}
                             onClick={() => setActiveTab('submissions')}
                         >
-                            Submissions
+                            {t('submissions')}
                         </button>
                     </div>
 
@@ -285,14 +287,14 @@ export default function ProblemPage() {
                                     <div className="flex items-center gap-2">
                                         <span className="material-symbols-outlined text-blue-500">schedule</span>
                                         <div>
-                                            <div className="text-xs text-gray-500">Time Limit</div>
+                                            <div className="text-xs text-gray-500">{t('timeLimit')}</div>
                                             <div className="font-mono font-bold">{problem.timeLimit}ms</div>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <span className="material-symbols-outlined text-purple-500">memory</span>
                                         <div>
-                                            <div className="text-xs text-gray-500">Memory Limit</div>
+                                            <div className="text-xs text-gray-500">{t('memoryLimit')}</div>
                                             <div className="font-mono font-bold">{problem.memoryLimit}MB</div>
                                         </div>
                                     </div>
@@ -302,7 +304,7 @@ export default function ProblemPage() {
                                 <div className="space-y-4">
                                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
                                         <span className="material-symbols-outlined text-[#E80000]">description</span>
-                                        Problem Statement
+                                        {t('problemStatement')}
                                     </h2>
                                     <div className="text-gray-300 leading-relaxed whitespace-pre-wrap bg-[#0D0D0D] p-6 rounded-xl border border-white/5">
                                         {problem.description}
@@ -313,7 +315,7 @@ export default function ProblemPage() {
                                 <div className="space-y-3">
                                     <h3 className="font-bold flex items-center gap-2">
                                         <span className="material-symbols-outlined text-yellow-500">label</span>
-                                        Tags
+                                        {t('tags')}
                                     </h3>
                                     <div className="flex gap-2 flex-wrap">
                                         <span className="text-xs bg-gradient-to-r from-[#E80000]/20 to-red-900/20 border border-[#E80000]/30 px-3 py-1.5 rounded-full text-[#E80000] font-medium capitalize">
@@ -327,20 +329,20 @@ export default function ProblemPage() {
                                 {!user ? (
                                     <div className="text-center py-20">
                                         <span className="material-symbols-outlined text-6xl text-gray-700 mb-4">lock</span>
-                                        <p className="text-gray-500">Please login to view your submissions</p>
+                                        <p className="text-gray-500">{t('loginToViewSubmissions')}</p>
                                     </div>
                                 ) : loadingSubmissions ? (
-                                    <div className="text-center py-20 text-gray-500">Loading submissions...</div>
+                                    <div className="text-center py-20 text-gray-500">{t('loadingSubmissions')}</div>
                                 ) : submissions.length === 0 ? (
                                     <div className="text-center py-20">
                                         <span className="material-symbols-outlined text-6xl text-gray-700 mb-4">code_off</span>
-                                        <p className="text-gray-500">No submissions yet. Submit your solution to see history!</p>
+                                        <p className="text-gray-500">{t('noSubmissions')}</p>
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
                                         <h2 className="text-xl font-bold flex items-center gap-2">
                                             <span className="material-symbols-outlined text-[#E80000]">history</span>
-                                            Your Submissions ({submissions.length})
+                                            {t('yourSubmissions')} ({submissions.length})
                                         </h2>
                                         {submissions.map((sub: any) => (
                                             <div
@@ -358,7 +360,13 @@ export default function ProblemPage() {
                                                                     ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/50'
                                                                     : 'bg-gray-500/20 text-gray-500 border border-gray-500/50'
                                                             }`}>
-                                                            {sub.status}
+                                                            {sub.status === 'AC' ? t('accepted') :
+                                                                sub.status === 'WA' ? t('wrongAnswer') :
+                                                                    sub.status === 'TLE' ? t('timeLimitExceeded') :
+                                                                        sub.status === 'MLE' ? t('memoryLimitExceeded') :
+                                                                            sub.status === 'CE' ? t('compilationError') :
+                                                                                sub.status === 'RE' ? t('runtimeError') :
+                                                                                    sub.status}
                                                         </div>
 
                                                         {/* Score */}
@@ -391,7 +399,7 @@ export default function ProblemPage() {
                                                         className="ml-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
                                                     >
                                                         <span className="material-symbols-outlined text-sm">code</span>
-                                                        View Code
+                                                        {t('viewCode')}
                                                     </button>
                                                 </div>
                                             </div>
@@ -410,12 +418,18 @@ export default function ProblemPage() {
                             {/* Modal Header */}
                             <div className="flex items-center justify-between p-6 border-b border-white/10">
                                 <div className="flex items-center gap-4">
-                                    <h2 className="text-2xl font-bold">Submission Details</h2>
+                                    <h2 className="text-2xl font-bold">{t('submissionDetails')}</h2>
                                     <span className={`px-3 py-1 rounded-lg font-bold text-sm ${selectedSubmission.status === 'AC'
                                         ? 'bg-green-500/20 text-green-500 border border-green-500/50'
                                         : 'bg-red-500/20 text-red-500 border border-red-500/50'
                                         }`}>
-                                        {selectedSubmission.status}
+                                        {selectedSubmission.status === 'AC' ? t('accepted') :
+                                            selectedSubmission.status === 'WA' ? t('wrongAnswer') :
+                                                selectedSubmission.status === 'TLE' ? t('timeLimitExceeded') :
+                                                    selectedSubmission.status === 'MLE' ? t('memoryLimitExceeded') :
+                                                        selectedSubmission.status === 'CE' ? t('compilationError') :
+                                                            selectedSubmission.status === 'RE' ? t('runtimeError') :
+                                                                selectedSubmission.status}
                                     </span>
                                 </div>
                                 <button onClick={() => setSelectedSubmission(null)} className="text-gray-500 hover:text-white">
@@ -428,19 +442,19 @@ export default function ProblemPage() {
                                 {/* Stats */}
                                 <div className="grid grid-cols-4 gap-4 mb-6">
                                     <div className="bg-white/5 p-4 rounded-lg">
-                                        <div className="text-xs text-gray-500 mb-1">Score</div>
+                                        <div className="text-xs text-gray-500 mb-1">{t('score')}</div>
                                         <div className="text-xl font-bold text-yellow-500">{selectedSubmission.score || 0}/100</div>
                                     </div>
                                     <div className="bg-white/5 p-4 rounded-lg">
-                                        <div className="text-xs text-gray-500 mb-1">Runtime</div>
+                                        <div className="text-xs text-gray-500 mb-1">{t('runtime')}</div>
                                         <div className="text-xl font-bold">{selectedSubmission.runtime || 0}ms</div>
                                     </div>
                                     <div className="bg-white/5 p-4 rounded-lg">
-                                        <div className="text-xs text-gray-500 mb-1">Memory</div>
+                                        <div className="text-xs text-gray-500 mb-1">{t('memory')}</div>
                                         <div className="text-xl font-bold">{selectedSubmission.memory || 0}KB</div>
                                     </div>
                                     <div className="bg-white/5 p-4 rounded-lg">
-                                        <div className="text-xs text-gray-500 mb-1">Language</div>
+                                        <div className="text-xs text-gray-500 mb-1">{t('language')}</div>
                                         <div className="text-xl font-bold capitalize">{selectedSubmission.language}</div>
                                     </div>
                                 </div>
@@ -448,14 +462,14 @@ export default function ProblemPage() {
                                 {/* Error Message */}
                                 {selectedSubmission.error && (
                                     <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                                        <div className="text-red-500 font-bold text-sm mb-2">Error:</div>
+                                        <div className="text-red-500 font-bold text-sm mb-2">{t('error')}:</div>
                                         <pre className="text-red-400 text-xs whitespace-pre-wrap">{selectedSubmission.error}</pre>
                                     </div>
                                 )}
 
                                 {/* Code */}
                                 <div>
-                                    <div className="text-sm font-bold mb-2 text-gray-400">Submitted Code:</div>
+                                    <div className="text-sm font-bold mb-2 text-gray-400">{t('submittedCode')}:</div>
                                     <div className="bg-[#1e1e1e] rounded-lg p-4 border border-white/10">
                                         <pre className="text-[#d4d4d4] font-mono text-sm overflow-x-auto">{selectedSubmission.code}</pre>
                                     </div>
@@ -492,7 +506,7 @@ export default function ProblemPage() {
                         >
                             <div className="flex items-center gap-2">
                                 <span className="material-symbols-outlined text-base">terminal</span>
-                                <span>Console</span>
+                                <span>{t('console')}</span>
                             </div>
                             <span className="material-symbols-outlined text-base">
                                 {consoleOpen ? 'expand_more' : 'expand_less'}
@@ -511,7 +525,7 @@ export default function ProblemPage() {
                                         onClick={() => setConsoleTab('output')}
                                     >
                                         <span className="material-symbols-outlined text-sm">code</span>
-                                        Output
+                                        {t('output')}
                                     </button>
                                     <button
                                         className={`px-4 py-2 text-xs font-medium transition-all flex items-center gap-1.5 ${consoleTab === 'result'
@@ -521,7 +535,7 @@ export default function ProblemPage() {
                                         onClick={() => setConsoleTab('result')}
                                     >
                                         <span className="material-symbols-outlined text-sm">check_circle</span>
-                                        Test Result
+                                        {t('testResult')}
                                     </button>
                                 </div>
 
@@ -530,18 +544,18 @@ export default function ProblemPage() {
                                     {consoleTab === 'output' ? (
                                         <div className="space-y-3">
                                             <div>
-                                                <label className="block text-gray-500 mb-2 text-xs font-bold uppercase tracking-wider">Custom Input</label>
+                                                <label className="block text-gray-500 mb-2 text-xs font-bold uppercase tracking-wider">{t('customInput')}</label>
                                                 <textarea
                                                     value={customInput}
                                                     onChange={(e) => setCustomInput(e.target.value)}
                                                     className="w-full h-16 bg-[#1e1e1e] border border-white/10 rounded-lg p-3 text-white resize-none focus:border-[#E80000] focus:ring-2 focus:ring-[#E80000]/20 transition-all"
-                                                    placeholder="Enter test input here..."
+                                                    placeholder={t('enterInput')}
                                                 ></textarea>
                                             </div>
                                             <div>
-                                                <label className="block text-gray-500 mb-2 text-xs font-bold uppercase tracking-wider">Standard Output</label>
+                                                <label className="block text-gray-500 mb-2 text-xs font-bold uppercase tracking-wider">{t('standardOutput')}</label>
                                                 <div className="bg-[#1e1e1e] border border-white/10 rounded-lg p-3 min-h-[60px] max-h-32 overflow-y-auto">
-                                                    <pre className="text-white whitespace-pre-wrap text-xs">{output || 'Run your code to see output...'}</pre>
+                                                    <pre className="text-white whitespace-pre-wrap text-xs">{output || t('runToSeeOutput')}</pre>
                                                 </div>
                                             </div>
                                         </div>
@@ -550,7 +564,7 @@ export default function ProblemPage() {
                                             {isSubmitting ? (
                                                 <div className="flex items-center gap-3 text-gray-400 py-4">
                                                     <span className="material-symbols-outlined animate-spin">sync</span>
-                                                    <span>Evaluating your submission...</span>
+                                                    <span>{t('evaluating')}</span>
                                                 </div>
                                             ) : submissionResult ? (
                                                 <div className={`p-5 rounded-xl border-2 ${submissionResult.status === 'AC'
@@ -566,11 +580,18 @@ export default function ProblemPage() {
                                                         <div>
                                                             <div className={`font-bold text-lg ${submissionResult.status === 'AC' ? 'text-green-500' : 'text-red-500'
                                                                 }`}>
-                                                                {submissionResult.status === 'AC' ? 'Accepted' : submissionResult.status}
+                                                                {/* Translate Status */}
+                                                                {submissionResult.status === 'AC' ? t('accepted') :
+                                                                    submissionResult.status === 'WA' ? t('wrongAnswer') :
+                                                                        submissionResult.status === 'TLE' ? t('timeLimitExceeded') :
+                                                                            submissionResult.status === 'MLE' ? t('memoryLimitExceeded') :
+                                                                                submissionResult.status === 'CE' ? t('compilationError') :
+                                                                                    submissionResult.status === 'RE' ? t('runtimeError') :
+                                                                                        submissionResult.status}
                                                             </div>
                                                             {submissionResult.score !== undefined && (
                                                                 <div className="text-yellow-500 font-bold text-sm">
-                                                                    Score: {submissionResult.score}/100
+                                                                    {t('score')}: {submissionResult.score}/100
                                                                 </div>
                                                             )}
                                                         </div>
@@ -579,11 +600,11 @@ export default function ProblemPage() {
                                                     {/* Stats */}
                                                     <div className="grid grid-cols-2 gap-4 text-gray-300 text-xs">
                                                         <div className="bg-black/30 p-3 rounded-lg">
-                                                            <div className="text-gray-500 mb-1">Runtime</div>
+                                                            <div className="text-gray-500 mb-1">{t('runtime')}</div>
                                                             <div className="font-bold text-base">{submissionResult.runtime || 0}ms</div>
                                                         </div>
                                                         <div className="bg-black/30 p-3 rounded-lg">
-                                                            <div className="text-gray-500 mb-1">Memory</div>
+                                                            <div className="text-gray-500 mb-1">{t('memory')}</div>
                                                             <div className="font-bold text-base">{submissionResult.memory || 0}KB</div>
                                                         </div>
                                                     </div>
@@ -591,7 +612,7 @@ export default function ProblemPage() {
                                                     {/* Error */}
                                                     {submissionResult.error && (
                                                         <div className="mt-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
-                                                            <div className="text-red-500 font-bold text-xs mb-1">Error Details:</div>
+                                                            <div className="text-red-500 font-bold text-xs mb-1">{t('errorDetails')}:</div>
                                                             <pre className="text-red-400 whitespace-pre-wrap text-xs">{submissionResult.error}</pre>
                                                         </div>
                                                     )}
@@ -599,7 +620,7 @@ export default function ProblemPage() {
                                             ) : (
                                                 <div className="text-center py-10 text-gray-500">
                                                     <span className="material-symbols-outlined text-5xl mb-3 opacity-50">pending_actions</span>
-                                                    <p>Submit your code to see test results</p>
+                                                    <p>{t('submitToSeeResults')}</p>
                                                 </div>
                                             )}
                                         </div>

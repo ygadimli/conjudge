@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,7 +11,7 @@ export default function LoginPage() {
     const t = useTranslations('login');
     const { login } = useAuth();
     const params = useParams();
-    const locale = params.locale || 'en';
+    const locale = (params.locale as string) || 'en';
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -44,7 +45,7 @@ export default function LoginPage() {
         try {
             await login(email, password);
         } catch (err) {
-            setError('Invalid email or password');
+            setError(t('invalidCredentials') || 'Invalid email or password');
         } finally {
             setIsLoading(false);
         }
@@ -87,7 +88,7 @@ export default function LoginPage() {
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
-                                {t('email')} / Username
+                                {t('emailUsernameLabel')}
                             </label>
                             <input
                                 id="email"
@@ -96,7 +97,7 @@ export default function LoginPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                                 className="w-full rounded-lg bg-black border border-white/20 px-4 py-3 text-white placeholder-[#E6E6E6]/50 focus:border-[#E80000] focus:outline-none focus:ring-2 focus:ring-[#E80000]/50 transition-all"
-                                placeholder="Email or Username"
+                                placeholder={t('emailUsernamePlaceholder')}
                             />
                         </div>
 
@@ -130,7 +131,7 @@ export default function LoginPage() {
                             disabled={isLoading}
                             className="gradient-button w-full rounded-lg py-3 px-4 text-base font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isLoading ? 'Loading...' : t('loginButton')}
+                            {isLoading ? t('loading') : t('loginButton')}
                         </button>
 
                         <div className="relative flex items-center justify-center my-6">

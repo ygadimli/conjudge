@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -45,12 +46,12 @@ export default function SignupPage() {
         setError('');
 
         if (password !== confirmPassword) {
-            setError('Passwords do not match');
+            setError(t('passwordsDoNotMatch'));
             return;
         }
 
         if (password.length < 6) {
-            setError('Password must be at least 6 characters');
+            setError(t('passwordTooShort'));
             return;
         }
 
@@ -60,10 +61,9 @@ export default function SignupPage() {
             await signup(username, email, password);
             setShowVerification(true); // Show verification modal instead of redirect
         } catch (err: any) {
-            setError(err.message || 'Registration failed. Please try again.');
+            setError(err.message || t('registrationFailed'));
             setIsLoading(false);
         }
-        // Note: setIsLoading(false) is handled in catch or not needed if successful since we show modal
     };
 
     const handleGoogleLogin = () => {
@@ -201,7 +201,7 @@ export default function SignupPage() {
                             disabled={isLoading}
                             className="gradient-button w-full rounded-lg py-3 px-4 text-base font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {isLoading ? 'Creating Account...' : t('signUpButton')}
+                            {isLoading ? t('creatingAccount') : t('signUpButton')}
                         </button>
 
                         <div className="relative flex items-center justify-center my-6">

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useTranslations } from 'next-intl';
 
 export default function AdminProblems() {
+    const t = useTranslations('admin');
     const { user } = useAuth();
     const [view, setView] = useState<'LIST' | 'IMPORT' | 'CREATE'>('LIST');
     const [problems, setProblems] = useState<any[]>([]);
@@ -51,21 +53,21 @@ export default function AdminProblems() {
             const data = await res.json();
 
             if (res.ok) {
-                setImportResult(`✅ Successfully imported: ${data.problem.title}`);
+                setImportResult(`✅ ${t('problems_successImport', { title: data.problem.title })}`);
                 setCfUrl('');
                 fetchProblems();
             } else {
-                setImportResult(`❌ Error: ${data.error}`);
+                setImportResult(`❌ ${t('problems_errorImport', { error: data.error })}`);
             }
         } catch (error) {
-            setImportResult('❌ Network error');
+            setImportResult(`❌ ${t('problems_networkError')}`);
         } finally {
             setImporting(false);
         }
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm('Delete this problem?')) return;
+        if (!confirm(t('problems_deleteConfirm'))) return;
         try {
             await fetch(`${API_URL}/api/problems/${id}`, { method: 'DELETE' });
             fetchProblems();
@@ -78,23 +80,23 @@ export default function AdminProblems() {
         return (
             <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8 animate-in fade-in">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold">Import from Codeforces</h2>
-                    <button onClick={() => setView('LIST')} className="text-gray-400 hover:text-white">← Back</button>
+                    <h2 className="text-2xl font-bold">{t('problems_importTitle')}</h2>
+                    <button onClick={() => setView('LIST')} className="text-gray-400 hover:text-white">← {t('problems_back')}</button>
                 </div>
 
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
-                    <h3 className="font-bold text-blue-400 mb-2">📌 How to Import:</h3>
+                    <h3 className="font-bold text-blue-400 mb-2">📌 {t('problems_howToImport')}</h3>
                     <ol className="text-sm text-gray-300 space-y-1 list-decimal list-inside">
-                        <li>Go to Codeforces and find a problem</li>
-                        <li>Copy the problem URL (e.g., https://codeforces.com/problemset/problem/1234/A)</li>
-                        <li>Paste it below and click Import</li>
-                        <li>The system will automatically scrape and add the problem</li>
+                        <li>{t('problems_step1')}</li>
+                        <li>{t('problems_step2')}</li>
+                        <li>{t('problems_step3')}</li>
+                        <li>{t('problems_step4')}</li>
                     </ol>
                 </div>
 
                 <form onSubmit={handleImportFromCF} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium mb-2">Codeforces Problem URL</label>
+                        <label className="block text-sm font-medium mb-2">{t('problems_cfUrlLabel')}</label>
                         <input
                             type="url"
                             value={cfUrl}
@@ -119,12 +121,12 @@ export default function AdminProblems() {
                         disabled={importing}
                         className="w-full gradient-button py-3 rounded text-white font-bold disabled:opacity-50"
                     >
-                        {importing ? '⏳ Importing...' : '📥 Import Problem'}
+                        {importing ? `⏳ ${t('problems_importing')}` : `📥 ${t('problems_importButton')}`}
                     </button>
                 </form>
 
                 <div className="mt-8 pt-6 border-t border-white/10">
-                    <h3 className="font-bold mb-4">Recently Imported Problems</h3>
+                    <h3 className="font-bold mb-4">{t('problems_recentImport')}</h3>
                     <div className="space-y-2">
                         {problems.filter(p => p.externalSource === 'Codeforces').slice(0, 5).map(p => (
                             <div key={p.id} className="flex items-center justify-between bg-white/5 p-3 rounded">
@@ -144,27 +146,27 @@ export default function AdminProblems() {
     return (
         <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8 animate-in fade-in">
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Manage Problems</h2>
+                <h2 className="text-2xl font-bold">{t('problems_manageTitle')}</h2>
                 <div className="flex gap-3">
                     <button
                         onClick={() => setView('IMPORT')}
                         className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-bold flex items-center gap-2"
                     >
                         <span className="material-symbols-outlined text-sm">download</span>
-                        Import from CF
+                        {t('problems_importTitle')}
                     </button>
                 </div>
             </div>
 
             <div className="mb-4 flex gap-2">
                 <div className="text-sm bg-white/5 px-3 py-1 rounded">
-                    Total: <span className="font-bold">{problems.length}</span>
+                    {t('problems_total')}: <span className="font-bold">{problems.length}</span>
                 </div>
                 <div className="text-sm bg-blue-500/10 px-3 py-1 rounded border border-blue-500/30">
                     CF: <span className="font-bold">{problems.filter(p => p.externalSource === 'Codeforces').length}</span>
                 </div>
                 <div className="text-sm bg-green-500/10 px-3 py-1 rounded border border-green-500/30">
-                    Local: <span className="font-bold">{problems.filter(p => !p.externalSource).length}</span>
+                    {t('problems_local')}: <span className="font-bold">{problems.filter(p => !p.externalSource).length}</span>
                 </div>
             </div>
 
@@ -172,11 +174,11 @@ export default function AdminProblems() {
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="border-b border-white/10 text-gray-400 text-sm">
-                            <th className="p-3">Title</th>
-                            <th className="p-3">Rating</th>
-                            <th className="p-3">Source</th>
-                            <th className="p-3">Category</th>
-                            <th className="p-3 text-right">Actions</th>
+                            <th className="p-3">{t('tableTitle')}</th>
+                            <th className="p-3">{t('tableRating')}</th>
+                            <th className="p-3">{t('tableSource')}</th>
+                            <th className="p-3">{t('tableCategory')}</th>
+                            <th className="p-3 text-right">{t('tableActions')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -196,7 +198,7 @@ export default function AdminProblems() {
                                         </span>
                                     ) : (
                                         <span className="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded border border-green-500/30">
-                                            Local
+                                            {t('problems_local')}
                                         </span>
                                     )}
                                 </td>
@@ -213,10 +215,10 @@ export default function AdminProblems() {
                         ))}
                     </tbody>
                 </table>
-                {loading && <div className="text-center py-4 text-gray-500">Loading...</div>}
+                {loading && <div className="text-center py-4 text-gray-500">{t('problems_loading')}</div>}
                 {!loading && problems.length === 0 && (
                     <div className="text-center py-8 text-gray-500">
-                        No problems yet. Import from Codeforces!
+                        {t('problems_noProblems')}
                     </div>
                 )}
             </div>

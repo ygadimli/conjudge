@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface StatsProps {
     stats: {
@@ -10,13 +11,16 @@ interface StatsProps {
 }
 
 export default function DashboardStats({ stats }: StatsProps) {
-    if (!stats) return <div className="text-gray-500">Loading stats...</div>;
+    const t = useTranslations('admin');
+    const tNav = useTranslations('nav');
+
+    if (!stats) return <div className="text-gray-500">{t('loadingStats')}</div>;
 
     const cards = [
-        { label: 'Total Users', value: stats.users, icon: 'group', color: 'text-blue-500', bg: 'bg-blue-500/10' },
-        { label: 'Total Problems', value: stats.problems, icon: 'code', color: 'text-green-500', bg: 'bg-green-500/10' },
-        { label: 'Submissions', value: stats.submissions, icon: 'send', color: 'text-purple-500', bg: 'bg-purple-500/10' },
-        { label: 'Contests', value: stats.contests, icon: 'emoji_events', color: 'text-yellow-500', bg: 'bg-yellow-500/10' }
+        { label: t('users'), value: stats.users, icon: 'group', color: 'text-blue-500', bg: 'bg-blue-500/10' },
+        { label: t('totalProblems'), value: stats.problems, icon: 'code', color: 'text-green-500', bg: 'bg-green-500/10' },
+        { label: tNav('submissions'), value: stats.submissions, icon: 'send', color: 'text-purple-500', bg: 'bg-purple-500/10' },
+        { label: t('contests'), value: stats.contests, icon: 'emoji_events', color: 'text-yellow-500', bg: 'bg-yellow-500/10' }
     ];
 
     return (

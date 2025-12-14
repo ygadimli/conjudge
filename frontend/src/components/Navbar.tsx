@@ -23,14 +23,23 @@ export default function Navbar() {
                     <h2 className="text-2xl font-bold">ConJudge</h2>
                 </Link>
                 <nav className="hidden md:flex items-center gap-6">
-                    <Link href={`/${locale}/profile/${user.username}`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">My Profile</Link>
-                    <Link href={`/${locale}/problems`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">Problems</Link>
-                    <Link href={`/${locale}/contests`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">Contests</Link>
-                    <Link href={`/${locale}/battles`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">Battles</Link>
-                    <Link href={`/${locale}/rankings`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">Rankings</Link>
-                    <Link href={`/${locale}/braintype`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">BrainType</Link>
+                    <Link href={`/${locale}/profile/${user.username}`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors flex items-center gap-2">
+                        {user.profilePicture ? (
+                            <img src={user.profilePicture.startsWith('http') ? user.profilePicture : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${user.profilePicture}`} alt="" className="w-6 h-6 rounded-full object-cover" />
+                        ) : (
+                            <div className="w-6 h-6 rounded-full bg-[#E80000] flex items-center justify-center text-[10px] font-bold text-white">
+                                {user.username[0].toUpperCase()}
+                            </div>
+                        )}
+                        {user.username}
+                    </Link>
+                    <Link href={`/${locale}/problems`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('problems')}</Link>
+                    <Link href={`/${locale}/contests`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('contests')}</Link>
+                    <Link href={`/${locale}/battles`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('battles')}</Link>
+                    <Link href={`/${locale}/rankings`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('rankings')}</Link>
+                    <Link href={`/${locale}/braintype`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('braintype')}</Link>
                     {user.role === 'ADMIN' && (
-                        <Link href={`/${locale}/admin`} className="text-sm font-medium text-[#E80000] hover:text-[#FF1A1A] transition-colors">Admin Panel</Link>
+                        <Link href={`/${locale}/admin`} className="text-sm font-medium text-[#E80000] hover:text-[#FF1A1A] transition-colors">{t('admin')}</Link>
                     )}
                 </nav>
             </div>

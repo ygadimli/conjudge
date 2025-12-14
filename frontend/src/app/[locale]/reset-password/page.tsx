@@ -1,10 +1,13 @@
+
 'use client';
 
 import { useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 export default function ResetPasswordPage() {
+    const t = useTranslations('resetPasswordPage');
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = searchParams.get('token');
@@ -17,7 +20,7 @@ export default function ResetPasswordPage() {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            alert("Passwords don't match");
+            alert(t('mismatch'));
             return;
         }
 
@@ -49,21 +52,21 @@ export default function ResetPasswordPage() {
             <div className="w-full max-w-md">
                 <div className="mb-8 flex justify-center">
                     <span className="material-symbols-outlined text-[#E80000] text-4xl mr-2">key</span>
-                    <h2 className="text-2xl font-bold text-white">New Password</h2>
+                    <h2 className="text-2xl font-bold text-white">{t('title')}</h2>
                 </div>
 
                 <div className="rounded-xl border border-white/10 bg-[#0D0D0D] p-8 shadow-2xl">
                     {status === 'success' ? (
                         <div className="text-center">
                             <span className="material-symbols-outlined text-green-500 text-5xl mb-4">check_circle</span>
-                            <h3 className="text-xl font-bold text-white mb-2">Password Reset!</h3>
-                            <p className="text-gray-400 mb-6">You can now login with your new password.</p>
+                            <h3 className="text-xl font-bold text-white mb-2">{t('success')}</h3>
+                            <p className="text-gray-400 mb-6">{t('successDesc')}</p>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-5">
                             <div>
                                 <label className="block text-sm font-medium text-white mb-2">
-                                    New Password
+                                    {t('newPassword')}
                                 </label>
                                 <input
                                     type="password"
@@ -77,7 +80,7 @@ export default function ResetPasswordPage() {
 
                             <div>
                                 <label className="block text-sm font-medium text-white mb-2">
-                                    Confirm Password
+                                    {t('confirmPassword')}
                                 </label>
                                 <input
                                     type="password"
@@ -90,7 +93,7 @@ export default function ResetPasswordPage() {
                             </div>
 
                             {status === 'error' && (
-                                <div className="text-red-500 text-sm text-center">Failed to reset password. Link might be expired.</div>
+                                <div className="text-red-500 text-sm text-center">{t('error')}</div>
                             )}
 
                             <button
@@ -98,7 +101,7 @@ export default function ResetPasswordPage() {
                                 disabled={status === 'loading'}
                                 className="gradient-button w-full rounded-lg py-3 px-4 text-base font-bold text-white transition-all disabled:opacity-50"
                             >
-                                {status === 'loading' ? 'Resetting...' : 'Set New Password'}
+                                {status === 'loading' ? t('resetting') : t('setNewPassword')}
                             </button>
                         </form>
                     )}
