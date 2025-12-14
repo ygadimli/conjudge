@@ -327,6 +327,7 @@ router.post('/upload-avatar', upload.single('avatar'), async (req: Request, res:
         }
 
         // Update user's profilePicture field
+        // Append timestamp to bust cache since filename is constant (userId.ext)
         const avatarUrl = `/avatars/${req.file.filename}`;
 
         await prisma.user.update({

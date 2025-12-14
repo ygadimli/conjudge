@@ -1,10 +1,13 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Navbar from '@/components/Navbar';
 
 export default function VerifyEmailPage() {
+    const t = useTranslations('verifyEmail');
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = searchParams.get('token');
@@ -46,21 +49,21 @@ export default function VerifyEmailPage() {
                 {status === 'verifying' && (
                     <>
                         <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mb-6"></div>
-                        <h1 className="text-2xl font-bold">Verifying your email...</h1>
+                        <h1 className="text-2xl font-bold">{t('verifying')}</h1>
                     </>
                 )}
                 {status === 'success' && (
                     <>
                         <span className="material-symbols-outlined text-green-500 text-6xl mb-4">check_circle</span>
-                        <h1 className="text-2xl font-bold mb-2">Email Verified!</h1>
-                        <p className="text-gray-400">Redirecting to login...</p>
+                        <h1 className="text-2xl font-bold mb-2">{t('success')}</h1>
+                        <p className="text-gray-400">{t('successDesc')}</p>
                     </>
                 )}
                 {status === 'error' && (
                     <>
                         <span className="material-symbols-outlined text-red-500 text-6xl mb-4">error</span>
-                        <h1 className="text-2xl font-bold mb-2">Verification Failed</h1>
-                        <p className="text-gray-400">Invalid or expired token.</p>
+                        <h1 className="text-2xl font-bold mb-2">{t('error')}</h1>
+                        <p className="text-gray-400">{t('errorDesc')}</p>
                     </>
                 )}
             </div>

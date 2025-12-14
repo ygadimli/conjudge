@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useRef } from 'react';
@@ -11,7 +12,7 @@ interface EditProfileModalProps {
 }
 
 export default function EditProfileModal({ user, onClose, onUpdate }: EditProfileModalProps) {
-    const t = useTranslations('common');
+    const t = useTranslations('profile');
     const [name, setName] = useState(user.name || '');
     const [newPassword, setNewPassword] = useState('');
     const [country, setCountry] = useState(user.country || '');
@@ -31,7 +32,7 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             if (file.size > 2 * 1024 * 1024) { // 2MB limit
-                setError('Image size must be less than 2MB');
+                setError(t('imageSizeError'));
                 return;
             }
             setAvatarFile(file);
@@ -63,7 +64,7 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                     const uploadData = await uploadRes.json();
                     newAvatarUrl = uploadData.avatarUrl;
                 } else {
-                    throw new Error('Failed to upload avatar');
+                    throw new Error(t('uploadError'));
                 }
             }
 
@@ -88,10 +89,10 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                 onClose();
             } else {
                 const data = await res.json();
-                setError(data.error || 'Failed to update profile');
+                setError(data.error || t('updateError'));
             }
         } catch (err: any) {
-            setError(err.message || 'Something went wrong');
+            setError(err.message || t('genericError'));
         } finally {
             setLoading(false);
         }
@@ -103,7 +104,7 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                 <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-white">
                     <span className="material-symbols-outlined">close</span>
                 </button>
-                <h2 className="text-2xl font-bold mb-6">Edit Profile</h2>
+                <h2 className="text-2xl font-bold mb-6">{t('editTitle')}</h2>
 
                 {error && <div className="bg-red-500/10 text-red-500 p-3 rounded mb-4 text-sm">{error}</div>}
 
@@ -115,12 +116,12 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                             onClick={() => fileInputRef.current?.click()}
                         >
                             {avatarPreview ? (
-                                <img src={avatarPreview.startsWith('http') || avatarPreview.startsWith('blob') ? avatarPreview : `${process.env.NEXT_PUBLIC_API_URL}${avatarPreview}`} alt="Profile" className="w-full h-full object-cover" />
+                                <img src={avatarPreview.startsWith('http') || avatarPreview.startsWith('blob') ? avatarPreview : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${avatarPreview}`} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
                                 <span className="material-symbols-outlined text-4xl text-gray-500">add_a_photo</span>
                             )}
                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span className="text-xs text-white">Change</span>
+                                <span className="text-xs text-white">{t('changeAvatar')}</span>
                             </div>
                         </div>
                         <input
@@ -130,44 +131,44 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                             accept="image/*"
                             className="hidden"
                         />
-                        <p className="text-xs text-gray-500 mt-2">Click to upload (Max 2MB)</p>
+                        <p className="text-xs text-gray-500 mt-2">{t('uploadHint')}</p>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold mb-2">Username</label>
+                        <label className="block text-sm font-bold mb-2">{t('usernameLabel')}</label>
                         <input
                             type="text"
                             value={user.username}
                             disabled
                             className="w-full bg-white/5 border border-white/10 rounded p-3 text-gray-400 cursor-not-allowed"
                         />
-                        <p className="text-xs text-gray-500 mt-1">Username cannot be changed.</p>
+                        <p className="text-xs text-gray-500 mt-1">{t('usernameHint')}</p>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold mb-2">Name</label>
+                        <label className="block text-sm font-bold mb-2">{t('nameLabel')}</label>
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Your full name"
+                            placeholder={t('namePlaceholder')}
                             className="w-full bg-black border border-white/20 rounded p-3 focus:border-[#E80000] outline-none"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold mb-2">New Password (Optional)</label>
+                        <label className="block text-sm font-bold mb-2">{t('passwordLabel')}</label>
                         <input
                             type="password"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
-                            placeholder="Leave empty to keep current"
+                            placeholder={t('passwordPlaceholder')}
                             className="w-full bg-black border border-white/20 rounded p-3 focus:border-[#E80000] outline-none"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold mb-2">Country</label>
+                        <label className="block text-sm font-bold mb-2">{t('countryLabel')}</label>
                         <div className="relative">
                             <select
                                 value={country}
@@ -175,7 +176,7 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                                 disabled={!!user.country}
                                 className={`w-full bg-black border border-white/20 rounded p-3 focus:border-[#E80000] outline-none appearance-none ${user.country ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
-                                <option value="">Select Country</option>
+                                <option value="">{t('selectCountry')}</option>
                                 {countries.map((c) => (
                                     <option key={c} value={c}>
                                         {getCountryFlag(c)} {c}
@@ -186,15 +187,16 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                                 <span className="material-symbols-outlined">expand_more</span>
                             </div>
                         </div>
-                        {user.country && <p className="text-xs text-gray-500 mt-1">Country can only be set once.</p>}
+                        {user.country && <p className="text-xs text-gray-500 mt-1">{t('countryHint')}</p>}
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold mb-2">Bio</label>
+                        <label className="block text-sm font-bold mb-2">{t('bioLabel')}</label>
                         <textarea
                             value={bio}
                             onChange={(e) => setBio(e.target.value)}
                             className="w-full bg-black border border-white/20 rounded p-3 focus:border-[#E80000] outline-none h-24 resize-none"
+                            placeholder={t('bioPlaceholder')}
                         />
                     </div>
 
@@ -203,7 +205,7 @@ export default function EditProfileModal({ user, onClose, onUpdate }: EditProfil
                         disabled={loading}
                         className="w-full gradient-button py-3 rounded font-bold mt-4"
                     >
-                        {loading ? 'Saving...' : 'Save Changes'}
+                        {loading ? t('saving') : t('save')}
                     </button>
                 </form>
             </div>

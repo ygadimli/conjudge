@@ -55,25 +55,25 @@ router.post('/analyze', async (req: Request, res: Response): Promise<any> => {
             ? acSubmissions.reduce((sum, s) => sum + s.runtime, 0) / acSubmissions.length
             : 0;
 
-        // Normalize speed score (Lower is better, assume <50ms is instant 100, >1000ms is slow 0)
-        // This is rough, real analysis would depend on language/problem.
-        let speedScore = Math.max(0, 100 - (avgRuntime / 10));
+        // Normalize speed score (Lower is better, assume <50ms is instant 100, >2000ms is slow 0)
+        // Relaxed curve: 100 - (runtime / 20)
+        let speedScore = Math.max(0, 100 - (avgRuntime / 20));
 
         // 3. Complexity (Average Rating of Attempted Problems)
         const avgRating = submissions.reduce((sum, s) => sum + (s.problem.rating || 800), 0) / submissions.length;
         // Normalize rating (800 -> 0, 3000 -> 100)
         const complexityScore = Math.min(100, Math.max(0, (avgRating - 800) / 22));
 
-        // 4. Persistence (Ratio of TLE/WA before AC on unique problems)
-        // Count unique problems solved
+        // 4. Persistence (Average number of attempts per solved problem)
         const solvedProblemIds = new Set(acSubmissions.map(s => s.problemId));
-        // Count total attempts on these problems
         const attemptsOnSolved = submissions.filter(s => solvedProblemIds.has(s.problemId)).length;
-        // Good persistence = High attempts per solved (Grinder) OR Low attempts (Genius)?
-        // Let's define Persistence as "Willingness to keep trying". 
-        // If Avg Attempts > 3, High Persistence.
         const avgAttempts = solvedProblemIds.size > 0 ? attemptsOnSolved / solvedProblemIds.size : 0;
-        const persistenceScore = Math.min(100, (avgAttempts / 5) * 100);
+
+        // 5 attempts = 100% Persistence. 1 attempt = 20%? No, let's base it on "Effort".
+        // If you solve everything in 1 try, you are efficient, not necessarily persistent (you didn't need to be).
+        // Check "High Effort" failures too (WA/TLE count).
+        const failureCount = submissions.length - acCount;
+        const persistenceScore = Math.min(100, Math.max(20, (failureCount / (submissions.length || 1)) * 100 + (avgAttempts * 10)));
 
 
         // --- Classification Logic (The "AI" Decision Tree) ---
@@ -82,9 +82,9 @@ router.post('/analyze', async (req: Request, res: Response): Promise<any> => {
 
         // Thresholds
         const HIGH_ACCURACY = 70;
-        const HIGH_SPEED = 80; // (which means low runtime)
-        const HIGH_COMPLEXITY = 60; // (~2100 rating avg)
-        const HIGH_PERSISTENCE = 60; // (>3 attempts avg)
+        const HIGH_SPEED = 70;
+        const HIGH_COMPLEXITY = 55; // Lowered slightly to be attainable
+        const HIGH_PERSISTENCE = 60;
 
         if (complexityScore > HIGH_COMPLEXITY && accuracy > HIGH_ACCURACY) {
             brainType = "The Grandmaster Strategist";
@@ -92,15 +92,15 @@ router.post('/analyze', async (req: Request, res: Response): Promise<any> => {
         } else if (speedScore > HIGH_SPEED && accuracy > 60) {
             brainType = "The Lightning Coder";
             description = "Your thought process is instantaneous. You solve standard problems faster than anyone else. Your reflex-to-code connection is almost superhuman.";
-        } else if (persistenceScore > HIGH_PERSISTENCE && accuracy < 50) {
-            brainType = "The Unstoppable Grinder";
-            description = "You never give up. Where others quit after a 'Wrong Answer', you dig deeper. Your superpower is resilience; you learn through trial and error until you dominate.";
+        } else if (persistenceScore > HIGH_PERSISTENCE && accuracy < 60) {
+            brainType = "The Unstoppable Juggernaut";
+            description = "Giving up is not in your vocabulary. You improve through sheer force of will, learning from every error and turning every failure into a stepping stone.";
         } else if (accuracy > 90) {
-            brainType = "The Perfectionist";
-            description = "You don't just solve problems; you write art. You rarely submit code that fails. You think through every edge case before hitting submit.";
-        } else if (complexityScore > 50) {
-            brainType = "The Deep Thinker";
-            description = "You prefer quality over quantity. You are drawn to complex algorithmic challenges that require deep, abstract reasoning rather than simple implementation.";
+            brainType = "The Perfectionist Artificer";
+            description = "You don't just solve problems; you craft masterpieces. You rarely submit code that fails, preferring to simulate every edge case in your mind first.";
+        } else if (complexityScore > 40 && speedScore < 40) {
+            brainType = "The Deep Weaver";
+            description = "You prioritize depth over speed. You are drawn to complex, abstract challenges that require profound reasoning, often taking your time to find the most elegant solution.";
         }
 
         // Update User Profile

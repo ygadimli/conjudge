@@ -1,22 +1,22 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 // Ensure avatars directory exists
 const avatarsDir = path.join(__dirname, '../../public/avatars');
 if (!fs.existsSync(avatarsDir)) {
     fs.mkdirSync(avatarsDir, { recursive: true });
 }
-
 // Configure multer storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, avatarsDir);
     },
     filename: (req, file, cb) => {
-        const userId = (req.body.userId || 'unknown');
         const ext = path.extname(file.originalname);
-        cb(null, `${userId}${ext}`);
+        const filename = `${uuidv4()}${ext}`;
+        cb(null, filename);
     }
 });
 

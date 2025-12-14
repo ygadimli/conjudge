@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,9 +24,10 @@ interface RankingUser {
 
 export default function RankingsPage() {
     const t = useTranslations('common');
+    const tRank = useTranslations('rankings');
     const params = useParams();
     const router = useRouter();
-    const locale = params.locale || 'en';
+    const locale = (params.locale as string) || 'en';
 
     const { user: currentUser } = useAuth();
     const [filter, setFilter] = useState<'contest' | 'battle'>('contest');
@@ -34,7 +36,6 @@ export default function RankingsPage() {
     const [favoritesOnly, setFavoritesOnly] = useState(false);
     const [rankings, setRankings] = useState<RankingUser[]>([]);
     const [loading, setLoading] = useState(true);
-    const [appliedSearch, setAppliedSearch] = useState(''); // For explicit "Apply"
 
     // User Rank Bar State
     const [myRankData, setMyRankData] = useState<{ rank: number, score: number } | null>(null);
@@ -130,7 +131,7 @@ export default function RankingsPage() {
                     </div>
                 )}
 
-                <h1 className="text-4xl font-black mb-8">Global Rankings</h1>
+                <h1 className="text-4xl font-black mb-8">{tRank('title')}</h1>
 
                 {/* Tabs */}
                 <div className="flex gap-2 mb-6">
@@ -138,13 +139,13 @@ export default function RankingsPage() {
                         onClick={() => setFilter('contest')}
                         className={`px-6 py-2 rounded-t-lg font-bold transition-colors border-b-2 ${filter === 'contest' ? 'bg-white/5 border-[#E80000] text-white' : 'border-transparent text-gray-500 hover:text-white'}`}
                     >
-                        Contest Rating
+                        {t('rating')}
                     </button>
                     <button
                         onClick={() => setFilter('battle')}
                         className={`px-6 py-2 rounded-t-lg font-bold transition-colors border-b-2 ${filter === 'battle' ? 'bg-white/5 border-[#E80000] text-white' : 'border-transparent text-gray-500 hover:text-white'}`}
                     >
-                        Battle Rating
+                        {t('battleRating')}
                     </button>
                 </div>
 
@@ -156,7 +157,7 @@ export default function RankingsPage() {
                         <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">search</span>
                         <input
                             type="text"
-                            placeholder="Search user..."
+                            placeholder={tRank('search')}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleApplyFilters()}
@@ -169,7 +170,7 @@ export default function RankingsPage() {
 
                     {/* Right Filters */}
                     <div className="flex items-center gap-4 w-full md:w-auto">
-                        <span className="text-sm font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap hidden lg:block">Filter By</span>
+                        <span className="text-sm font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap hidden lg:block">{tRank('filters')}</span>
 
                         <div className="relative flex-1 md:flex-none">
                             <select
@@ -177,7 +178,7 @@ export default function RankingsPage() {
                                 value={countryFilter}
                                 onChange={(e) => setCountryFilter(e.target.value)}
                             >
-                                <option value="All">All Countries</option>
+                                <option value="All">{t('country')}: All</option>
                                 <option value="Azerbaijan">🇦🇿 Azerbaijan</option>
                                 <option value="Turkey">🇹🇷 Turkey</option>
                                 <option value="USA">🇺🇸 USA</option>
@@ -206,20 +207,20 @@ export default function RankingsPage() {
                                 <th className="p-4 w-16 text-center">#</th>
                                 <th className="p-4 w-16"></th> {/* Avatar Column */}
                                 <th className="p-4 w-48">{t('country')}</th>
-                                <th className="p-4">User</th>
-                                <th className="p-4 w-40">Rank</th> {/* Fixed width for badge */}
-                                <th className="p-4 text-right w-32">Rating</th>
-                                <th className="p-4 text-right w-32">Solved</th>
+                                <th className="p-4">{tRank('username')}</th>
+                                <th className="p-4 w-40">{tRank('rank')}</th>
+                                <th className="p-4 text-right w-32">{filter === 'contest' ? t('rating') : t('battleRating')}</th>
+                                <th className="p-4 text-right w-32">{t('solved')}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan={7} className="p-8 text-center text-gray-500 animate-pulse">Loading rankings...</td>
+                                    <td colSpan={7} className="p-8 text-center text-gray-500 animate-pulse">Loading...</td>
                                 </tr>
                             ) : rankings.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="p-8 text-center text-gray-500">No users found matching criteria.</td>
+                                    <td colSpan={7} className="p-8 text-center text-gray-500">No users found</td>
                                 </tr>
                             ) : (
                                 rankings.map((user, index) => {

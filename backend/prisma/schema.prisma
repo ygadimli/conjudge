@@ -27,12 +27,12 @@ model User {
 
   // OAuth Providers
   googleId   String?  @unique
-  githubId            String?   @unique
+  githubId   String?  @unique
   needsUsernameSetup  Boolean   @default(false)
   
   // Ratings & Stats
   rating        Int      @default(0)    // Contest Rating
-  battleRating  Int      @default(0) // Battle Rating
+  battleRating  Int      @default(1200) // Battle Rating (Default 1200 now)
   maxRating     Int      @default(0)
   
   brainType String?
@@ -53,6 +53,7 @@ model User {
   // Relations
   submissions     Submission[]
   battle          BattleParticipant[]
+  createdBattles  Battle[] @relation("BattleCreator")
   createdProblems Problem[] @relation("UserProblems")
   contests        Contest[]
   
@@ -115,7 +116,7 @@ model Submission {
   createdAt DateTime @default(now())
   
   // Relations
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   problem   Problem  @relation(fields: [problemId], references: [id])
   problemId String
@@ -125,7 +126,7 @@ model Submission {
 
 model SubmissionAnalysis {
   id           String     @id @default(uuid())
-  submission   Submission @relation(fields: [submissionId], references: [id])
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
   submissionId String     @unique
   
   complexity   String?
@@ -139,9 +140,29 @@ model Battle {
   id           String   @id @default(uuid())
   type         String   // "1v1", "team", "blitz", "mirror"
   status       String   // "waiting", "active", "finished"
+  
+  // Join System
+  joinCode     String?  @unique // 6-digit code for private battles
+  isPrivate    Boolean  @default(false) // true = invite only, false = public lobby
+  
+  // Matchmaking Filters
+  minRating    Int?     // Minimum rating to join
+  maxRating    Int?     // Maximum rating to join
+  region       String?  // Region filter (optional)
+  country      String?  // Country filter (optional)
+  
+  // Battle Settings
+  duration     Int      @default(1800) // Battle duration in seconds (30 min default)
+  problemCount Int      @default(5)    // Number of problems
+  
+  // Time Tracking
   startTime    DateTime?
   endTime      DateTime?
   createdAt    DateTime @default(now())
+  
+  // Creator
+  createdBy    User     @relation("BattleCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  createdById  String
   
   // Relations
   participants BattleParticipant[]
@@ -150,27 +171,38 @@ model Battle {
 
 model BattleParticipant {
   id        String   @id @default(uuid())
-  info      String?  // Stored as stringified JSON if needed
-  score     Int      @default(0)
-  rank      Int?
+  
+  // Score & Rating
+  score     Int      @default(0)       // Points earned in battle
+  rank      Int?                       // Final rank in battle
+  ratingChange Int   @default(0)       // ELO change (+/-)
+  oldRating    Int?                    // Rating before battle (Null if first time/unrated)
+  newRating    Int?                    // Rating after battle
+  
+  // Status
+  status    String   @default("waiting") // "waiting", "ready", "active", "finished"
+  joinedAt  DateTime @default(now())
   
   // Relations
-  battle    Battle   @relation(fields: [battleId], references: [id])
+  battle    Battle   @relation(fields: [battleId], references: [id], onDelete: Cascade)
   battleId  String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 }
 
 model BattleRound {
-  id        String   @id @default(uuid())
-  order     Int
-  duration  Int      // seconds
+  id           String   @id @default(uuid())
+  order        Int                      // Round number (1, 2, 3...)
+  
+  // Problem Assignment
+  problemRating Int?                    // Target rating for problem selection
+  duration      Int      @default(0)    // seconds (optional per problem limit)
   
   // Relations
-  battle    Battle   @relation(fields: [battleId], references: [id])
-  battleId  String
-  problem   Problem  @relation(fields: [problemId], references: [id])
-  problemId String
+  battle       Battle   @relation(fields: [battleId], references: [id], onDelete: Cascade)
+  battleId     String
+  problem      Problem  @relation(fields: [problemId], references: [id])
+  problemId    String
 }
 
 model Announcement {

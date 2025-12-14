@@ -1,11 +1,13 @@
+
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import RadarChart from '@/components/Profile/RadarChart';
 
 interface BrainStats {
     accuracy: number;
@@ -17,8 +19,7 @@ interface BrainStats {
 export default function BrainTypePage() {
     const t = useTranslations('braintype');
     const params = useParams();
-    const router = useRouter(); // Missing import fix
-    const locale = params.locale || 'en';
+    const locale = (params.locale as string) || 'en';
     const { user } = useAuth();
 
     // State
@@ -27,11 +28,11 @@ export default function BrainTypePage() {
     const [loadingStep, setLoadingStep] = useState(0);
 
     const loadingSteps = [
-        "Connecting to Neural Network...",
-        "Scanning Submission Patterns...",
-        "Analyzing Code Efficiency...",
-        "Measuring Cognitive Reflexes...",
-        "Finalizing Brain Type Profile..."
+        t('loadingConnecting'),
+        t('loadingScanning'),
+        t('loadingAnalyzing'),
+        t('loadingReflexes'),
+        t('loadingFinalizing')
     ];
 
     const handleAnalyze = async () => {
@@ -49,7 +50,7 @@ export default function BrainTypePage() {
                 }
                 return prev + 1;
             });
-        }, 800);
+        }, 1200); // Slower, more "deliberate" analysis
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
@@ -70,7 +71,7 @@ export default function BrainTypePage() {
                         stats: data.stats
                     });
                     setIsAnalyzing(false);
-                }, 4000);
+                }, 5000);
             }
         } catch (err) {
             console.error(err);
@@ -80,123 +81,136 @@ export default function BrainTypePage() {
     };
 
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="min-h-screen bg-[#050505] text-white selection:bg-[#E80000] selection:text-white">
             <Navbar />
 
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-                {/* Hero Section */}
-                <div className="text-center mb-16">
-                    <div className={`inline-flex items-center justify-center w-24 h-24 rounded-full bg-[#E80000]/10 mb-6 relative ${isAnalyzing ? 'animate-pulse' : ''}`}>
-                        <span className="material-symbols-outlined text-[#E80000] text-6xl">psychology</span>
-                        {isAnalyzing && (
-                            <div className="absolute inset-0 rounded-full border-2 border-[#E80000] animate-ping opacity-20"></div>
+
+                {/* Header Section */}
+                {!result && !isAnalyzing && (
+                    <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                        <div className="inline-block relative mb-8 group">
+                            <div className="absolute inset-0 bg-[#E80000] blur-[100px] opacity-20 rounded-full group-hover:opacity-30 transition-opacity"></div>
+                            <div className="w-32 h-32 rounded-full border border-[#E80000]/30 bg-black flex items-center justify-center relative z-10 shadow-[0_0_50px_rgba(232,0,0,0.2)]">
+                                <span className="material-symbols-outlined text-6xl text-[#E80000]">psychology</span>
+                            </div>
+                        </div>
+
+                        <h1 className="text-6xl font-black mb-6 tracking-tight">
+                            CONJUDGE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E80000] to-orange-500">BRAINTYPE</span>
+                        </h1>
+                        <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                            {t('subtitle')}
+                        </p>
+
+                        {user ? (
+                            <button
+                                onClick={handleAnalyze}
+                                className="group relative px-12 py-6 bg-transparent overflow-hidden rounded-xl"
+                            >
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#E80000] to-[#b30000] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                                <div className="absolute inset-0 w-full h-full border border-white/20 rounded-xl"></div>
+                                <span className="relative flex items-center gap-3 text-xl font-bold uppercase tracking-widest text-white">
+                                    <span className="material-symbols-outlined">fingerprint</span>
+                                    {t('activate')}
+                                </span>
+                            </button>
+                        ) : (
+                            <div className="inline-flex items-center gap-2 text-yellow-500 border border-yellow-500/30 bg-yellow-500/5 px-6 py-3 rounded-full">
+                                <span className="material-symbols-outlined text-lg">lock</span>
+                                <span className="font-bold">{t('loginRequired')}</span>
+                            </div>
                         )}
                     </div>
+                )}
 
-                    {!result && !isAnalyzing && (
-                        <>
-                            <h1 className="text-5xl font-black mb-6 text-glow">{t('title')}</h1>
-                            <p className="text-xl text-[#E6E6E6] max-w-3xl mx-auto mb-8">{t('subtitle')}</p>
-
-                            {user ? (
-                                <button
-                                    onClick={handleAnalyze}
-                                    className="px-10 py-5 bg-[#E80000] hover:bg-[#ff0000] text-white font-bold rounded-xl text-xl shadow-[0_0_30px_rgba(232,0,0,0.4)] hover:shadow-[0_0_50px_rgba(232,0,0,0.6)] transition-all transform hover:-translate-y-1"
-                                >
-                                    <span className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined">auto_awesome</span>
-                                        ACTIVATE AI ANALYSIS
-                                    </span>
-                                </button>
-                            ) : (
-                                <div className="text-yellow-500 font-bold border border-yellow-500/30 bg-yellow-500/10 p-4 rounded-lg inline-block">
-                                    Please login to analyze your Brain Type.
-                                </div>
-                            )}
-                        </>
-                    )}
-
-                    {isAnalyzing && (
-                        <div className="max-w-md mx-auto">
-                            <h2 className="text-2xl font-bold mb-4 text-[#E80000] animate-pulse">AI PROCESSING</h2>
-                            <div className="bg-[#111] p-4 rounded-lg font-mono text-green-400 text-left h-32 flex flex-col justify-end border border-green-500/30 shadow-[0_0_15px_rgba(0,255,0,0.1)]">
-                                {loadingSteps.slice(0, loadingStep + 1).map((step, i) => (
-                                    <div key={i} className="animate-in slide-in-from-left-4 fade-in duration-300">
-                                        {`> ${step}`}
-                                    </div>
-                                ))}
-                                <span className="animate-pulse">_</span>
+                {/* Analysis Animation View */}
+                {isAnalyzing && (
+                    <div className="flex flex-col items-center justify-center min-h-[50vh] animate-in fade-in duration-500">
+                        <div className="relative w-48 h-48 mb-12">
+                            <div className="absolute inset-0 border-4 border-[#E80000]/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                            <div className="absolute inset-4 border-4 border-t-[#E80000] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-[spin_1.5s_linear_infinite]"></div>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="material-symbols-outlined text-6xl text-[#E80000] animate-pulse">psychology</span>
                             </div>
                         </div>
-                    )}
-                </div>
 
-                {/* Results View */}
-                {result && !isAnalyzing && (
-                    <div className="animate-in fade-in zoom-in duration-500">
-                        {/* Type Header */}
-                        <div className="text-center mb-12">
-                            <span className="text-[#E80000] font-mono text-sm tracking-[0.3em] uppercase mb-2 block">Analysis Complete</span>
-                            <h2 className="text-6xl font-black text-white mb-6 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-                                {result.type}
-                            </h2>
-                            <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                                "{result.description}"
+                        <div className="w-full max-w-md space-y-2">
+                            <div className="flex justify-between text-xs uppercase tracking-widest text-[#E80000]/70 font-mono mb-2">
+                                <span>{t('systemAnalysis')}</span>
+                                <span>{loadingStep * 20}%</span>
+                            </div>
+                            <div className="h-1 bg-[#1A1A1A] rounded-full overflow-hidden">
+                                <div
+                                    className="h-full bg-[#E80000] transition-all duration-1000 ease-out"
+                                    style={{ width: `${(loadingStep + 1) * 20}%` }}
+                                ></div>
+                            </div>
+                            <p className="text-center text-gray-400 mt-4 font-mono text-sm animate-pulse">
+                                {loadingSteps[loadingStep]}...
                             </p>
-                        </div>
-
-                        {/* Detailed Stats Grid */}
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                            {/* Accuracy */}
-                            <div className="bg-[#0D0D0D] border border-white/10 p-6 rounded-xl relative overflow-hidden group">
-                                <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-                                <h3 className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Accuracy</h3>
-                                <div className="text-4xl font-black text-white mb-2">{result.stats.accuracy}%</div>
-                                <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                    <div className="bg-blue-500 h-full rounded-full transition-all duration-1000" style={{ width: `${result.stats.accuracy}%` }}></div>
-                                </div>
-                            </div>
-
-                            {/* Speed */}
-                            <div className="bg-[#0D0D0D] border border-white/10 p-6 rounded-xl relative overflow-hidden group">
-                                <div className="absolute top-0 left-0 w-1 h-full bg-yellow-500"></div>
-                                <h3 className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Cognitive Speed</h3>
-                                <div className="text-4xl font-black text-white mb-2">{result.stats.speed}/100</div>
-                                <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                    <div className="bg-yellow-500 h-full rounded-full transition-all duration-1000" style={{ width: `${result.stats.speed}%` }}></div>
-                                </div>
-                            </div>
-
-                            {/* Complexity */}
-                            <div className="bg-[#0D0D0D] border border-white/10 p-6 rounded-xl relative overflow-hidden group">
-                                <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
-                                <h3 className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Logic Depth</h3>
-                                <div className="text-4xl font-black text-white mb-2">{result.stats.complexity}/100</div>
-                                <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                    <div className="bg-purple-500 h-full rounded-full transition-all duration-1000" style={{ width: `${result.stats.complexity}%` }}></div>
-                                </div>
-                            </div>
-
-                            {/* Persistence */}
-                            <div className="bg-[#0D0D0D] border border-white/10 p-6 rounded-xl relative overflow-hidden group">
-                                <div className="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
-                                <h3 className="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Resilience</h3>
-                                <div className="text-4xl font-black text-white mb-2">{result.stats.persistence}/100</div>
-                                <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                    <div className="bg-red-500 h-full rounded-full transition-all duration-1000" style={{ width: `${result.stats.persistence}%` }}></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="text-center">
-                            <Link href={`/${locale}/dashboard`} className="text-gray-500 hover:text-white transition-colors underline underline-offset-4">
-                                Return to Dashboard
-                            </Link>
                         </div>
                     </div>
                 )}
 
+                {/* Results View */}
+                {result && !isAnalyzing && (
+                    <div className="grid lg:grid-cols-2 gap-16 items-center animate-in slide-in-from-bottom-10 fade-in duration-1000">
 
+                        {/* Visualization Side */}
+                        <div className="relative flex justify-center lg:justify-end order-2 lg:order-1">
+                            <div className="absolute inset-0 bg-[#E80000]/5 blur-[60px] rounded-full"></div>
+                            <div className="relative z-10 bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 aspect-square flex items-center justify-center shadow-2xl">
+                                <RadarChart stats={result.stats} size={400} />
+                            </div>
+                        </div>
+
+                        {/* Content Side */}
+                        <div className="order-1 lg:order-2 space-y-8 text-center lg:text-left">
+                            <div>
+                                <div className="inline-block px-4 py-1 rounded-full bg-[#E80000]/10 border border-[#E80000]/30 text-[#E80000] text-xs font-bold uppercase tracking-[0.2em] mb-4">
+                                    Analysis Complete
+                                </div>
+                                <h2 className="text-5xl md:text-7xl font-black text-white mb-6 uppercase tracking-tight leading-none text-glow">
+                                    {t(`types.${result.type}`)}
+                                </h2>
+                                <p className="text-xl text-gray-400 leading-relaxed font-light border-l-4 border-[#E80000] pl-6 ml-4 lg:ml-0 text-left">
+                                    {t(`types.${result.type}_desc`)}
+                                </p>
+                            </div>
+
+                            {/* Stat Cards Mini */}
+                            <div className="grid grid-cols-2 gap-4 pt-8">
+                                <div className="bg-[#111] p-4 rounded-xl border border-white/5">
+                                    <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">{t('accuracy')}</div>
+                                    <div className="text-2xl font-bold text-white">{result.stats.accuracy}%</div>
+                                </div>
+                                <div className="bg-[#111] p-4 rounded-xl border border-white/5">
+                                    <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">{t('speed')}</div>
+                                    <div className="text-2xl font-bold text-white">{result.stats.speed}<span className="text-sm text-gray-600">/100</span></div>
+                                </div>
+                                <div className="bg-[#111] p-4 rounded-xl border border-white/5">
+                                    <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">{t('logic')}</div>
+                                    <div className="text-2xl font-bold text-white">{result.stats.complexity}<span className="text-sm text-gray-600">/100</span></div>
+                                </div>
+                                <div className="bg-[#111] p-4 rounded-xl border border-white/5">
+                                    <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">{t('resilience')}</div>
+                                    <div className="text-2xl font-bold text-white">{result.stats.persistence}<span className="text-sm text-gray-600">/100</span></div>
+                                </div>
+                            </div>
+
+                            <div className="pt-8">
+                                <button
+                                    onClick={handleAnalyze}
+                                    className="text-sm font-bold text-gray-500 hover:text-white transition-colors flex items-center gap-2 mx-auto lg:mx-0"
+                                >
+                                    <span className="material-symbols-outlined">refresh</span>
+                                    {t('reanalyze')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );

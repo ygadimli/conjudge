@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -42,7 +43,7 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
-    const t = useTranslations('common');
+    const t = useTranslations('profile'); // Using 'profile' namespace
     const { user: currentUser } = useAuth();
     const params = useParams();
     const locale = params.locale || 'en';
@@ -83,18 +84,18 @@ export default function ProfilePage() {
                         }
                     }
                 } else {
-                    setError('User not found');
+                    setError(t('notFound'));
                 }
             } catch (err) {
                 console.error(err);
-                setError('Failed to load profile');
+                setError(t('loadError'));
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchProfile();
-    }, [username, currentUser]);
+    }, [username, currentUser, t]);
 
     const handleUpdateProfile = (updatedUser: any) => {
         setProfile(prev => prev ? { ...prev, ...updatedUser } : null);
@@ -138,7 +139,7 @@ export default function ProfilePage() {
         }
     };
 
-    if (isLoading) return <div className="min-h-screen bg-black flex items-center justify-center text-white">Loading Profile...</div>;
+    if (isLoading) return <div className="min-h-screen bg-black flex items-center justify-center text-white">{t('loading')}</div>;
     if (error || !profile) return <div className="min-h-screen bg-black flex items-center justify-center text-red-500">{error}</div>;
 
     const tier = getTier(profile.rating || 0);
@@ -160,7 +161,7 @@ export default function ProfilePage() {
 
             {showUserList && (
                 <UserListModal
-                    title={showUserList}
+                    title={showUserList === 'Followers' ? t('followers') : t('following')}
                     users={userList}
                     onClose={() => setShowUserList(null)}
                 />
@@ -176,7 +177,7 @@ export default function ProfilePage() {
                         <div className={`w-32 h-32 rounded-full border-4 flex items-center justify-center bg-black overflow-hidden flex-shrink-0`} style={{ borderColor: tier.color }}>
                             {profile.profilePicture ? (
                                 <img
-                                    src={profile.profilePicture.startsWith('http') ? profile.profilePicture : `${process.env.NEXT_PUBLIC_API_URL}${profile.profilePicture}`}
+                                    src={profile.profilePicture.startsWith('http') ? profile.profilePicture : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${profile.profilePicture}`}
                                     alt={profile.username}
                                     className="w-full h-full object-cover"
                                 />
@@ -202,32 +203,32 @@ export default function ProfilePage() {
                                 <p className="text-lg text-white font-bold">{profile.name || profile.username}</p>
                                 {profile.isBanned && (
                                     <span className="px-3 py-1 bg-red-500/20 text-red-500 border border-red-500/50 rounded-lg text-sm font-bold">
-                                        BANNED
+                                        {t('banned')}
                                     </span>
                                 )}
                             </div>
-                            <p className="text-[#E6E6E6]/60 max-w-xl mx-auto md:mx-0 break-words">{profile.bio || 'No bio yet.'}</p>
+                            <p className="text-[#E6E6E6]/60 max-w-xl mx-auto md:mx-0 break-words">{profile.bio || t('noBio')}</p>
 
                             <div className="flex items-center gap-6 mt-6 justify-center md:justify-start flex-wrap">
                                 <div className="text-center">
                                     <span className="block font-bold text-xl">{profile.rating}</span>
-                                    <span className="text-xs text-gray-500">Contest Rating</span>
+                                    <span className="text-xs text-gray-500">{t('contestRating')}</span>
                                 </div>
                                 <div className="text-center">
                                     <span className="block font-bold text-xl">{profile.battleRating}</span>
-                                    <span className="text-xs text-gray-500">Battle Rating</span>
+                                    <span className="text-xs text-gray-500">{t('battleRating')}</span>
                                 </div>
                                 <div className="text-center">
                                     <span className="block font-bold text-xl">{profile._count.submissions}</span>
-                                    <span className="text-xs text-gray-500">Solved</span>
+                                    <span className="text-xs text-gray-500">{t('solved')}</span>
                                 </div>
                                 <button onClick={() => fetchUserList('Followers')} className="text-center hover:opacity-80 transition-opacity">
                                     <span className="block font-bold text-xl">{followersCount}</span>
-                                    <span className="text-xs text-gray-500">Followers</span>
+                                    <span className="text-xs text-gray-500">{t('followers')}</span>
                                 </button>
                                 <button onClick={() => fetchUserList('Following')} className="text-center hover:opacity-80 transition-opacity">
                                     <span className="block font-bold text-xl">{profile._count.following}</span>
-                                    <span className="text-xs text-gray-500">Following</span>
+                                    <span className="text-xs text-gray-500">{t('following')}</span>
                                 </button>
                             </div>
                         </div>
@@ -239,7 +240,7 @@ export default function ProfilePage() {
                                     onClick={() => setShowEditModal(true)}
                                     className="px-6 py-2 rounded bg-white/10 hover:bg-white/20 text-white font-bold transition-colors border border-white/20 w-full"
                                 >
-                                    Edit Profile
+                                    {t('editProfile')}
                                 </button>
                             ) : (
                                 <button
@@ -248,12 +249,12 @@ export default function ProfilePage() {
                                         ? 'bg-transparent border-white/30 text-white hover:border-red-500 hover:text-red-500'
                                         : 'bg-white text-black hover:bg-gray-200 border-transparent'}`}
                                 >
-                                    {isFollowing ? 'Unfollow' : 'Follow'}
+                                    {isFollowing ? t('unfollow') : t('follow')}
                                 </button>
                             )}
                             <div className="text-right text-xs text-gray-500 mt-2">
-                                <p>Last visit: {new Date(profile.lastVisit).toLocaleDateString()}</p>
-                                <p>Registered: {new Date(profile.createdAt).toLocaleDateString()}</p>
+                                <p>{t('lastVisit')}: {new Date(profile.lastVisit).toLocaleDateString()}</p>
+                                <p>{t('registered')}: {new Date(profile.createdAt).toLocaleDateString()}</p>
                             </div>
                         </div>
                     </div>
@@ -270,11 +271,11 @@ export default function ProfilePage() {
                             <div className="mt-8 pt-6 border-t border-white/10">
                                 <h3 className="font-bold mb-4 flex items-center gap-2">
                                     <span className="material-symbols-outlined text-blue-500">history</span>
-                                    Recent Submissions
+                                    {t('recentSubmissions')}
                                 </h3>
                                 <div className="flex flex-col gap-2">
                                     {recentActivity.length === 0 ? (
-                                        <p className="text-gray-500 text-sm">No recent activity.</p>
+                                        <p className="text-gray-500 text-sm">{t('noActivity')}</p>
                                     ) : (
                                         recentActivity.slice(0, 3).map((sub: any) => (
                                             <Link
@@ -285,7 +286,7 @@ export default function ProfilePage() {
                                                 <div className="flex items-center gap-3 min-w-0">
                                                     <div className={`w-2 h-10 rounded-full flex-shrink-0 ${sub.status === 'AC' ? 'bg-green-500' : 'bg-red-500'}`}></div>
                                                     <div className="min-w-0">
-                                                        <p className="font-bold text-sm truncate text-left group-hover:text-blue-400 transition-colors">{sub.problem?.title || 'Unknown Problem'}</p>
+                                                        <p className="font-bold text-sm truncate text-left group-hover:text-blue-400 transition-colors">{sub.problem?.title || t('unknownProblem')}</p>
                                                         <p className="text-xs text-gray-500">{new Date(sub.createdAt).toLocaleString()}</p>
                                                     </div>
                                                 </div>
@@ -304,15 +305,15 @@ export default function ProfilePage() {
                         {/* Rating Graph */}
                         <div>
                             <div className="flex justify-between items-end mb-4">
-                                <h2 className="text-2xl font-bold">Rating History</h2>
-                                <span className="text-sm text-gray-500">Max Rating: {profile.maxRating}</span>
+                                <h2 className="text-2xl font-bold">{t('ratingHistory')}</h2>
+                                <span className="text-sm text-gray-500">{t('maxRating')}: {profile.maxRating}</span>
                             </div>
 
                             {graphData.length > 0 ? (
                                 <RatingGraph data={graphData} />
                             ) : (
                                 <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8 text-center text-gray-500 h-64 flex items-center justify-center">
-                                    No rating history available yet. Participate in contests to see your graph!
+                                    {t('noGraphData')}
                                 </div>
                             )}
 
@@ -325,24 +326,18 @@ export default function ProfilePage() {
                     <div className="space-y-8">
                         {/* Rank Info */}
                         <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-6">
-                            <h3 className="font-bold mb-4">Rankings</h3>
+                            <h3 className="font-bold mb-4">{t('rankings')}</h3>
                             <div className="space-y-3">
                                 <div className="flex justify-between">
-                                    <span className="text-gray-400">Global Rank</span>
+                                    <span className="text-gray-400">{t('globalRank')}</span>
                                     <span className="font-bold">#{profile.globalRank}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-400">Country Rank</span>
+                                    <span className="text-gray-400">{t('countryRank')}</span>
                                     <span className="font-bold">#{profile.countryRank}</span>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Friends/Following - Maybe a quick Access list? */}
-                        {/* We already have Followers/Following buttons in header. 
-                            Let's keep this as a summary or remove if redundant.
-                            User requested "Friends" section.
-                         */}
                     </div>
                 </div>
             </main>

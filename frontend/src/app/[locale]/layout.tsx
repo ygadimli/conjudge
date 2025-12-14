@@ -20,10 +20,10 @@ export default async function LocaleLayout({
     const { locale } = await params;
     const messages = await getMessages();
 
+
     return (
         <html lang={locale} className="dark" suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/favicon.ico" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet" />

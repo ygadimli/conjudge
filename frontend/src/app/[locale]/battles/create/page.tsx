@@ -75,12 +75,12 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
             </header>
 
             <main className="mx-auto max-w-3xl px-4 py-12">
-                <h1 className="text-4xl font-black mb-8 text-center text-glow">Create New Battle</h1>
+                <h1 className="text-4xl font-black mb-8 text-center text-glow">{t('createNewBattle')}</h1>
 
                 <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8">
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium mb-3">Battle Type</label>
+                            <label className="block text-sm font-medium mb-3">{t('battleType')}</label>
                             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                 {['1v1', 'Team', 'Blitz', 'Mirror'].map((type) => (
                                     <button
@@ -98,29 +98,29 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-3">Duration (Minutes)</label>
+                            <label className="block text-sm font-medium mb-3">{t('durationLabel')}</label>
                             <select
                                 value={duration}
                                 onChange={(e) => setDuration(e.target.value)}
                                 className="w-full bg-black border border-white/20 rounded-lg p-3 focus:border-[#E80000] outline-none"
                             >
-                                <option value="15">15 Minutes</option>
-                                <option value="30">30 Minutes</option>
-                                <option value="60">1 Hour</option>
-                                <option value="120">2 Hours</option>
+                                <option value="15">15 {t('minutes')}</option>
+                                <option value="30">30 {t('minutes')}</option>
+                                <option value="60">1 {t('hour')}</option>
+                                <option value="120">2 {t('hours')}</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-3">Difficulty</label>
+                            <label className="block text-sm font-medium mb-3">{t('difficultyLabel')}</label>
                             <select
                                 value={difficulty}
                                 onChange={(e) => setDifficulty(e.target.value)}
                                 className="w-full bg-black border border-white/20 rounded-lg p-3 focus:border-[#E80000] outline-none"
                             >
-                                <option value="Easy">Easy (800-1200)</option>
-                                <option value="Medium">Medium (1200-1600)</option>
-                                <option value="Hard">Hard (1600+)</option>
+                                <option value="Easy">{t('easy')} (800-1200)</option>
+                                <option value="Medium">{t('medium')} (1200-1600)</option>
+                                <option value="Hard">{t('hard')} (1600+)</option>
                             </select>
                         </div>
 
@@ -129,7 +129,7 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
                             disabled={isCreating}
                             className="gradient-button w-full py-4 rounded-lg font-bold text-lg mt-4 disabled:opacity-50"
                         >
-                            {isCreating ? 'Creating Arena...' : 'Create Arena'}
+                            {isCreating ? t('creatingArena') : t('createArena')}
                         </button>
                     </div>
                 </div>
