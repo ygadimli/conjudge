@@ -78,11 +78,6 @@ model Problem {
   externalId     String? // e.g., "1234/A"
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
-  // Dynamic Difficulty System
-  solveCount     Int      @default(0)     // How many people solved it
-  attemptCount   Int      @default(0)     // Total attempts
-  dynamicDifficulty String @default("MEDIUM") // EASY, MEDIUM, HARD, INSANE
 
   // Relations
   submissions Submission[]
@@ -121,12 +116,11 @@ model Submission {
   createdAt DateTime @default(now())
   
   // Relations
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
   problem   Problem  @relation(fields: [problemId], references: [id])
   problemId String
   
-  testResults String?  // JSON store for individual test case results
   analysis  SubmissionAnalysis?
 }
 

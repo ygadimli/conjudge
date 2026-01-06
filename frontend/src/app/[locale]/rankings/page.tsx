@@ -205,7 +205,7 @@ export default function RankingsPage() {
                         <thead>
                             <tr className="bg-[#151515] border-b border-white/10 text-gray-400 text-xs font-bold uppercase tracking-wider">
                                 <th className="p-4 w-16 text-center">#</th>
-                                <th className="p-4 w-16"></th> {/* Avatar Column */}
+                                <th className="p-4 w-16"></th>
                                 <th className="p-4 w-48">{t('country')}</th>
                                 <th className="p-4">{tRank('username')}</th>
                                 <th className="p-4 w-40">{tRank('rank')}</th>

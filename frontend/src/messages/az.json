@@ -464,6 +464,25 @@
         "title": "BrainType — Koqnitiv Analiz Sistemi",
         "subtitle": "ConJudge yalnız nəticələri deyil, düşüncə tərzini də analiz edir.",
         "description": "AI hər bir istifadəçinin kodlaşdırma davranışını öyrənir.",
+        "types": {
+            "The Algorithmic Thinker": "Alqoritmik Düşüncə",
+            "The Algorithmic Thinker_desc": "Siz alqoritmləri dərindən başa düşürsünüz. Məlumat strukturları və recursiya sizin təbii alətlərinizdir.",
+            "The Mathematical Mind": "Riyazi Zəka",
+            "The Mathematical Mind_desc": "Siz formullar və isbatlarla müəyyən edilmiş problemləri sevirsiniz. Abstrakt düşüncə ən güclü tərəfinizdir.",
+            "The Intuitive Optimist": "İntuitiv Optimist",
+            "The Intuitive Optimist_desc": "Sizin iti intuisiyanız var. Optimal həll yolunu dərhal seçirsiniz.",
+            "The Systematic Builder": "Sistemli İnşaatçı",
+            "The Systematic Builder_desc": "Siz mürəkkəb məntiqli kodları səhvsiz yazırsınız. Başqalarının bağlandığı yerdə siz təmiz, işləyən kod yazırsınız.",
+            "The Graph Theory Navigator": "Qraf Nəzəriyyəsi Naviqatoru",
+            "The Graph Theory Navigator_desc": "Siz dünyanı düyünlər və tillər kimi görürsünüz. Mürəkkəb əlaqə problemləri sizin üçün sadədir.",
+            "The Dynamic Visionary": "Dinamik Vizyoner",
+            "The Dynamic Visionary_desc": "Siz problemləri üst-üstə düşən alt problemlər kimi görürsünüz. DP ustalığınız üstün rekursiv düşüncəyə işarədir.",
+            "The Contest Warrior": "Yarış Döyüşçüsü",
+            "The Contest Warrior_desc": "Siz təzyiq altında çiçəklənirsiniz. Yarışlarda iştirak etmək sizin üçün bir həyəcandır.",
+            "The Novice Explorer": "Yeni Kəşfiyyatçı",
+            "The Novice Explorer_desc": "Alqoritmlər dünyasına yeni qədəm qoyursunuz. Üslubunuzu müəyyən etmək üçün həll etməyə davam edin."
+        },
+        "reanalyze": "Yenidən Analiz Et",
         "parameters": {
             "strengths": "Güclü Tərəflər",
             "weaknesses": "Zəif Tərəflər",
@@ -572,20 +591,89 @@
         "viewCode": "Koda Bax",
         "submissionDetails": "Həll Detalları",
         "score": "Xal",
-        "runtime": "İcra Vaxtı",
+        "runtime": "Zaman",
         "memory": "Yaddaş",
         "language": "Dil",
-        "submittedCode": "Göndərilən Kod",
+        "submittedCode": "Göndərilmiş Kod",
         "console": "Konsol",
-        "output": "Çıxış",
-        "testResult": "Test Nəticəsi",
-        "customInput": "Xüsusi Giriş",
-        "enterInput": "Test girişini bura yazın...",
-        "standardOutput": "Standart Çıxış",
-        "runToSeeOutput": "Çıxışı görmək üçün icra edin...",
-        "evaluating": "Həlliniz yoxlanılır...",
-        "accepted": "Qəbul Edildi",
-        "errorDetails": "Xəta Detalları",
-        "submitToSeeResults": "Nəticəni görmək üçün göndərin"
+        "statement": "Şərt",
+        "discussion": "Müzakirə",
+        "editorial": "İzah (Editorial)",
+        "testing": "Test Edilir",
+        "results": "Nəticələr"
+    },
+    "PRICING": {
+        "TITLE": "Səviyyəni Yüksəlt",
+        "SUBTITLE": "Potensialını Maksimuma Çatdır",
+        "MONTHLY": "Aylıq",
+        "YEARLY": "İllik",
+        "DISCOUNT": "-20%",
+        "FREE": {
+            "NAME": "Start",
+            "PRICE": "0 ₼",
+            "DESC": "Yarışmağa başlamaq üçün",
+            "BTN": "Cari Plan",
+            "FEATURES": [
+                "Standart Yarışlar",
+                "BrainType Analizi (Sadə)",
+                "Qlobal Reytinq",
+                "İcma Problemləri"
+            ]
+        },
+        "PREMIUM": {
+            "NAME": "Pro",
+            "PRICE": "29.99 ₼",
+            "DESC": "Peşəkarlar və Məktəblər üçün",
+            "BTN": "Premium Al",
+            "FEATURES": [
+                "AI Çətinlik Mühərriki",
+                "Canlı Anti-Cheat Monitor",
+                "Dərin BrainType Analizi",
+                "AI Məşqçi və İzahlar",
+                "Məktəb Rejimi",
+                "Limitsiz Problemlər"
+            ]
+        }
+    },
+    "AI_STUDIO": {
+        "TITLE": "AI Problem Studio",
+        "SUBTITLE": "Generate competitive programming problems instantly using AI.",
+        "TOPIC_LABEL": "Challenge Topic",
+        "TOPIC_PLACEHOLDER": "e.g. Graph Theory, Dynamic Programming...",
+        "DIFFICULTY_LABEL": "Difficulty Level",
+        "BTN_GENERATE": "Generate Problem",
+        "BTN_GENERATING": "AI is thinking...",
+        "Of": "of",
+        "RESULT_TITLE": "Generated Content",
+        "SAVE": "Save to Database"
+    },
+    "SCHOOL": {
+        "TITLE": "Teacher Dashboard",
+        "MONITOR": "Live Exam Monitor",
+        "ACTIVE_EXAMS": "Active Exams",
+        "STUDENTS_ONLINE": "Students Online",
+        "CHEATING_DETECTIONS": "Cheating Detections",
+        "ALERTS": "Alerts",
+        "STATUS": {
+            "CLEAR": "Clear",
+            "SUSPICIOUS": "Suspicious",
+            "CHEATING": "Likely Cheating"
+        },
+        "PANEL": {
+            "CAMERA": "Camera",
+            "SCREEN": "Screen",
+            "MIC": "Microphone",
+            "TAB": "Tab Focus",
+            "AI": "AI Signal",
+            "REFRESH": "Refresh Interval: 3s"
+        },
+        "EVENTS": {
+            "TAB_SWITCH": "Tab Switched",
+            "FACE_MISSING": "Face Not Detected",
+            "MULTIPLE_FACES": "Multiple Faces Detected",
+            "VOICE_DETECTED": "Voice Activity Detected",
+            "PHONE_DETECTED": "Phone Detected",
+            "COPY_PASTE": "Copy/Paste Detected"
+        }
     }
 }

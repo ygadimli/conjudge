@@ -25,6 +25,8 @@ const io = new Server(httpServer, {
     }
 });
 
+app.set('io', io);
+
 // Middleware
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -61,6 +63,9 @@ app.use('/api/announcements', announcementRoutes);
 import brainTypeRoutes from './routes/braintype';
 app.use('/api/braintype', brainTypeRoutes);
 
+import paymentRoutes from './routes/payment';
+app.use('/api/payment', paymentRoutes);
+
 // Static files (Avatars)
 import path from 'path';
 app.use('/avatars', express.static(path.join(__dirname, '../public/avatars')));
@@ -69,6 +74,10 @@ app.use('/avatars', express.static(path.join(__dirname, '../public/avatars')));
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', message: 'ConJudge API is running' });
 });
+
+// Socket.IO for School Monitor
+import { setupSchoolSocket } from './sockets/school';
+setupSchoolSocket(io);
 
 // Socket.IO for real-time battles
 io.on('connection', (socket) => {

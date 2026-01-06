@@ -360,13 +360,7 @@ export default function ProblemPage() {
                                                                     ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/50'
                                                                     : 'bg-gray-500/20 text-gray-500 border border-gray-500/50'
                                                             }`}>
-                                                            {sub.status === 'AC' ? t('accepted') :
-                                                                sub.status === 'WA' ? t('wrongAnswer') :
-                                                                    sub.status === 'TLE' ? t('timeLimitExceeded') :
-                                                                        sub.status === 'MLE' ? t('memoryLimitExceeded') :
-                                                                            sub.status === 'CE' ? t('compilationError') :
-                                                                                sub.status === 'RE' ? t('runtimeError') :
-                                                                                    sub.status}
+                                                            {sub.status === 'AC' ? t('accepted') : sub.status}
                                                         </div>
 
                                                         {/* Score */}
@@ -423,13 +417,7 @@ export default function ProblemPage() {
                                         ? 'bg-green-500/20 text-green-500 border border-green-500/50'
                                         : 'bg-red-500/20 text-red-500 border border-red-500/50'
                                         }`}>
-                                        {selectedSubmission.status === 'AC' ? t('accepted') :
-                                            selectedSubmission.status === 'WA' ? t('wrongAnswer') :
-                                                selectedSubmission.status === 'TLE' ? t('timeLimitExceeded') :
-                                                    selectedSubmission.status === 'MLE' ? t('memoryLimitExceeded') :
-                                                        selectedSubmission.status === 'CE' ? t('compilationError') :
-                                                            selectedSubmission.status === 'RE' ? t('runtimeError') :
-                                                                selectedSubmission.status}
+                                        {selectedSubmission.status === 'AC' ? t('accepted') : selectedSubmission.status}
                                     </span>
                                 </div>
                                 <button onClick={() => setSelectedSubmission(null)} className="text-gray-500 hover:text-white">
@@ -580,14 +568,7 @@ export default function ProblemPage() {
                                                         <div>
                                                             <div className={`font-bold text-lg ${submissionResult.status === 'AC' ? 'text-green-500' : 'text-red-500'
                                                                 }`}>
-                                                                {/* Translate Status */}
-                                                                {submissionResult.status === 'AC' ? t('accepted') :
-                                                                    submissionResult.status === 'WA' ? t('wrongAnswer') :
-                                                                        submissionResult.status === 'TLE' ? t('timeLimitExceeded') :
-                                                                            submissionResult.status === 'MLE' ? t('memoryLimitExceeded') :
-                                                                                submissionResult.status === 'CE' ? t('compilationError') :
-                                                                                    submissionResult.status === 'RE' ? t('runtimeError') :
-                                                                                        submissionResult.status}
+                                                                {submissionResult.status === 'AC' ? t('accepted') : submissionResult.status}
                                                             </div>
                                                             {submissionResult.score !== undefined && (
                                                                 <div className="text-yellow-500 font-bold text-sm">

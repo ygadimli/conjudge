@@ -38,6 +38,12 @@ export default function Navbar() {
                     <Link href={`/${locale}/battles`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('battles')}</Link>
                     <Link href={`/${locale}/rankings`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('rankings')}</Link>
                     <Link href={`/${locale}/braintype`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">{t('braintype')}</Link>
+
+                    {/* Premium Links */}
+                    <div className="h-4 w-px bg-white/20 mx-2"></div>
+                    <Link href={`/${locale}/pricing`} className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 hover:opacity-80 transition-colors">PRO</Link>
+                    <Link href={`/${locale}/school/monitor`} className="text-sm font-medium text-[#E6E6E6] hover:text-[#E80000] transition-colors">School</Link>
+
                     {user.role === 'ADMIN' && (
                         <Link href={`/${locale}/admin`} className="text-sm font-medium text-[#E80000] hover:text-[#FF1A1A] transition-colors">{t('admin')}</Link>
                     )}

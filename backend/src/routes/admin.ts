@@ -211,4 +211,96 @@ router.delete('/users/:id', async (req: Request, res: Response): Promise<any> =>
     }
 });
 
+// POST /api/admin/generate-problem (Google Gemini AI)
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+router.post('/generate-problem', async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { topic, difficulty } = req.body;
+
+        if (!process.env.GEMINI_API_KEY) {
+            // Fallback for demo if no key provided
+            console.warn('GEMINI_API_KEY not found. Using Mock Fallback.');
+            return res.json({
+                message: 'GEMINI_API_KEY missing. Returning Mock Data.',
+                problem: {
+                    title: `[MOCK] ${topic} Challenge`,
+                    description: `Please add GEMINI_API_KEY to backend/.env to get real AI generation.\n\nMock description for **${topic}**.`,
+                    difficulty: 2,
+                    rating: 1200,
+                    category: topic,
+                    tags: `${topic},mock`,
+                    testCases: JSON.stringify([])
+                }
+            });
+        }
+
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
+
+        // Using newest models available in late 2025
+        const modelsToTry = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+        let text = "";
+        let lastError = null;
+
+        for (const modelName of modelsToTry) {
+            try {
+                process.stdout.write(`Attempting Gemini model: ${modelName}...\n`);
+                const model = genAI.getGenerativeModel({ model: modelName });
+
+                const prompt = `
+                    Generate a competitive programming problem about "${topic}" (difficulty: ${difficulty}).
+                    Return JSON:
+                    {
+                        "title": "...",
+                        "description": "...",
+                        "difficulty": 2,
+                        "rating": 1200,
+                        "tags": "...",
+                        "timeLimit": 1000,
+                        "memoryLimit": 256,
+                        "testCases": [{"input": "...", "output": "..."}]
+                    }
+                `;
+
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                text = response.text();
+                if (text) {
+                    process.stdout.write(`Success with ${modelName}\n`);
+                    break;
+                }
+            } catch (e: any) {
+                process.stderr.write(`Model ${modelName} failed: ${e.message}\n`);
+                lastError = e;
+            }
+        }
+
+        if (!text) throw lastError || new Error("AI generation failed");
+
+        const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        const aiData = JSON.parse(jsonStr);
+
+        const problem = await prisma.problem.create({
+            data: {
+                title: aiData.title,
+                description: aiData.description,
+                difficulty: aiData.difficulty || 2,
+                rating: aiData.rating || 1200,
+                category: topic,
+                tags: aiData.tags || topic,
+                timeLimit: aiData.timeLimit || 1000,
+                memoryLimit: aiData.memoryLimit || 256,
+                testCases: JSON.stringify(aiData.testCases || []),
+                isAiGenerated: true,
+                dynamicDifficulty: difficulty
+            }
+        });
+
+        res.json({ message: 'Problem generated successfully', problem });
+    } catch (error) {
+        console.error('Error generating problem:', error);
+        res.status(500).json({ error: 'AI Generation Failed', details: (error as any).message });
+    }
+});
+
 export default router;

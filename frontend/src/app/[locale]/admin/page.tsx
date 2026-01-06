@@ -50,7 +50,16 @@ export default function AdminPage() {
             <Navbar />
 
             <div className="max-w-7xl mx-auto py-12 px-4">
-                <h1 className="text-3xl font-bold mb-8 text-[#E80000]">{t('title')}</h1>
+                <div className="flex justify-between items-center mb-8">
+                    <h1 className="text-3xl font-bold text-[#E80000]">{t('title')}</h1>
+                    <button
+                        onClick={() => router.push(`/${locale}/admin/ai-studio`)}
+                        className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg font-bold text-white hover:opacity-90 transition-opacity"
+                    >
+                        <span className="material-symbols-outlined">auto_awesome</span>
+                        AI Problem Studio
+                    </button>
+                </div>
 
                 {/* Tabs Navigation */}
                 <div className="flex gap-2 mb-8 border-b border-white/10 pb-1 overflow-x-auto hide-scrollbar">

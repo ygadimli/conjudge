@@ -133,14 +133,20 @@ router.post('/join', async (req: Request, res: Response): Promise<any> => {
             return res.status(400).json({ error: "Battle is full" });
         }
 
-        await prisma.battleParticipant.create({
+        const participant = await prisma.battleParticipant.create({
             data: {
                 battleId: battle.id,
                 userId,
                 oldRating: userRating,
                 status: 'ready'
-            }
+            },
+            include: { user: { select: { username: true, rating: true } } }
         });
+
+        const io = req.app.get('io');
+        if (io) {
+            io.to(`battle-${battle.id}`).emit('participant-joined', participant);
+        }
 
         res.json({ battleId: battle.id });
     } catch (error) {
@@ -252,7 +258,7 @@ router.get('/:id', async (req: Request, res: Response): Promise<any> => {
         });
 
         if (!battle) return res.status(404).json({ error: "Battle not found" });
-        res.json(battle);
+        res.json({ battle });
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
     }
@@ -308,6 +314,11 @@ router.post('/:id/start', async (req: Request, res: Response): Promise<any> => {
                 startTime: new Date()
             }
         });
+
+        const io = req.app.get('io');
+        if (io) {
+            io.to(`battle-${id}`).emit('battle-started', updated);
+        }
 
         // Socket emit could go here (via global io if available)
 

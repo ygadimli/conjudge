@@ -17,14 +17,8 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
     const [difficulty, setDifficulty] = useState('Easy');
     const [isCreating, setIsCreating] = useState(false);
 
-    // Effect to read URL params
-    const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-    const typeParam = searchParams?.get('type');
+    // URL params logic removed to avoid hydration errors as requested.
 
-    // We should ideally use useSearchParams from next/navigation but for simplicity in this structure:
-    if (typeParam && battleType !== typeParam && ['1v1', 'Team', 'Blitz', 'Mirror'].includes(typeParam)) {
-        setBattleType(typeParam);
-    }
 
     const handleCreate = async () => {
         if (!user) return;
@@ -32,18 +26,22 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
 
         try {
             const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-            const res = await fetch(`${API_URL}/api/battles`, {
+            const res = await fetch(`${API_URL}/api/battles/create`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     type: battleType,
-                    participantIds: [user.id] // Creator joins automatically
+                    duration: parseInt(duration) * 60, // Convert minutes to seconds
+                    minRating: difficulty === 'Easy' ? 800 : difficulty === 'Medium' ? 1200 : 1600,
+                    maxRating: difficulty === 'Easy' ? 1200 : difficulty === 'Medium' ? 1600 : 3000,
+                    userId: user.id, // Explicitly send userId for backend validation
+                    participantIds: [user.id]
                 })
             });
 
             if (res.ok) {
                 const data = await res.json();
-                router.push(`/${locale}/battles/${data.battle.id}`);
+                router.push(`/${locale}/battles/${data.id}`); // Backend returns the battle object directly or { battle: ... } - checking backend, it returns `battle` object directly in `create` route
             } else {
                 console.error('Failed to create battle');
             }
@@ -75,12 +73,12 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
             </header>
 
             <main className="mx-auto max-w-3xl px-4 py-12">
-                <h1 className="text-4xl font-black mb-8 text-center text-glow">{t('createNewBattle')}</h1>
+                <h1 className="text-4xl font-black mb-8 text-center text-glow">Create New Battle</h1>
 
                 <div className="bg-[#0D0D0D] border border-white/10 rounded-xl p-8">
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium mb-3">{t('battleType')}</label>
+                            <label className="block text-sm font-medium mb-3">Battle Type</label>
                             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                 {['1v1', 'Team', 'Blitz', 'Mirror'].map((type) => (
                                     <button
@@ -98,29 +96,29 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-3">{t('durationLabel')}</label>
+                            <label className="block text-sm font-medium mb-3">Duration</label>
                             <select
                                 value={duration}
                                 onChange={(e) => setDuration(e.target.value)}
                                 className="w-full bg-black border border-white/20 rounded-lg p-3 focus:border-[#E80000] outline-none"
                             >
-                                <option value="15">15 {t('minutes')}</option>
-                                <option value="30">30 {t('minutes')}</option>
-                                <option value="60">1 {t('hour')}</option>
-                                <option value="120">2 {t('hours')}</option>
+                                <option value="15">15 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="60">1 Hour</option>
+                                <option value="120">2 Hours</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-3">{t('difficultyLabel')}</label>
+                            <label className="block text-sm font-medium mb-3">Difficulty</label>
                             <select
                                 value={difficulty}
                                 onChange={(e) => setDifficulty(e.target.value)}
                                 className="w-full bg-black border border-white/20 rounded-lg p-3 focus:border-[#E80000] outline-none"
                             >
-                                <option value="Easy">{t('easy')} (800-1200)</option>
-                                <option value="Medium">{t('medium')} (1200-1600)</option>
-                                <option value="Hard">{t('hard')} (1600+)</option>
+                                <option value="Easy">Easy (800-1200)</option>
+                                <option value="Medium">Medium (1200-1600)</option>
+                                <option value="Hard">Hard (1600+)</option>
                             </select>
                         </div>
 
@@ -129,7 +127,7 @@ export default function CreateBattlePage({ params }: { params: { locale: string 
                             disabled={isCreating}
                             className="gradient-button w-full py-4 rounded-lg font-bold text-lg mt-4 disabled:opacity-50"
                         >
-                            {isCreating ? t('creatingArena') : t('createArena')}
+                            {isCreating ? 'Creating Arena...' : 'Create Arena'}
                         </button>
                     </div>
                 </div>

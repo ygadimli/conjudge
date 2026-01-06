@@ -23,7 +23,6 @@ const evaluateSubmissionKeyLogic = async (problem: any, code: string, language: 
     let totalScore = 0;
     let finalStatus = 'AC';
     let maxRuntime = 0;
-    let maxMemory = 0;
 
     for (const task of subtasks) {
         let groupPassed = true;
@@ -31,7 +30,6 @@ const evaluateSubmissionKeyLogic = async (problem: any, code: string, language: 
         for (const testCase of task.cases) {
             const result = await executeCode(language, code, testCase.input);
             maxRuntime = Math.max(maxRuntime, result.executionTime);
-            maxMemory = Math.max(maxMemory, result.memory || 0);
 
             if (result.error) {
                 groupPassed = false;
@@ -57,7 +55,7 @@ const evaluateSubmissionKeyLogic = async (problem: any, code: string, language: 
 
     if (totalScore === 100) finalStatus = 'AC';
 
-    return { status: finalStatus, score: totalScore, runtime: maxRuntime, memory: maxMemory };
+    return { status: finalStatus, score: totalScore, runtime: maxRuntime };
 };
 
 // Submit solution (Database + Scoring)
@@ -107,7 +105,7 @@ router.post('/', async (req: Request, res: Response): Promise<any> => {
 
         // Local Execution
         try {
-            const { status, score, runtime, memory } = await evaluateSubmissionKeyLogic(problem, code, language);
+            const { status, score, runtime } = await evaluateSubmissionKeyLogic(problem, code, language);
 
             const submission = await prisma.submission.create({
                 data: {
@@ -116,7 +114,7 @@ router.post('/', async (req: Request, res: Response): Promise<any> => {
                     status,
                     score,
                     runtime,
-                    memory,
+                    memory: 0,
                     userId,
                     problemId
                 }
@@ -166,11 +164,11 @@ router.post('/:id/rejudge', async (req: Request, res: Response) => {
         if (!submission) return res.status(404).json({ error: 'Submission not found' });
         if (!submission.problem) return res.status(404).json({ error: 'Problem not found' });
 
-        const { status, score, runtime, memory } = await evaluateSubmissionKeyLogic(submission.problem, submission.code, submission.language);
+        const { status, score, runtime } = await evaluateSubmissionKeyLogic(submission.problem, submission.code, submission.language);
 
         const updated = await prisma.submission.update({
             where: { id },
-            data: { status, score, runtime, memory }
+            data: { status, score, runtime }
         });
 
         res.json(updated);

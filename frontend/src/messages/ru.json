@@ -586,6 +586,11 @@
         "evaluating": "Проверка решения...",
         "accepted": "Принято",
         "errorDetails": "Детали ошибки",
-        "submitToSeeResults": "Отправьте код, чтобы увидеть результаты"
+        "submitToSeeResults": "Отправьте код, чтобы увидеть результаты",
+        "statement": "Условие",
+        "discussion": "Обсуждение",
+        "editorial": "Разбор",
+        "testing": "Тестирование",
+        "results": "Результаты"
     }
 }

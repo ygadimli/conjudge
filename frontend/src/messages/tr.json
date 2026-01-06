@@ -609,6 +609,11 @@
         "compilationError": "Derleme Hatası",
         "runtimeError": "Çalışma Hatası",
         "errorDetails": "Hata Detayları",
-        "submitToSeeResults": "Test sonuçlarını görmek için kodunuzu gönderin"
+        "submitToSeeResults": "Test sonuçlarını görmek için kodunuzu gönderin",
+        "statement": "Soru",
+        "discussion": "Tartışma",
+        "editorial": "Çözüm",
+        "testing": "Test Ediliyor",
+        "results": "Sonuçlar"
     }
 }
